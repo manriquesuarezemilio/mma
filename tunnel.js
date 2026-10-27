@@ -83,9 +83,9 @@
   }
 
   /* ---------- Salida: estallido de luz cálido ---------- */
-  const sun = new THREE.Mesh(new THREE.CircleGeometry(3.4, 40), new THREE.MeshBasicMaterial({ color: 0xffe6b0 }));
-  sun.position.set(0, H * 0.55, END_Z + 3); scene.add(sun);
-  const sunGlow = new THREE.PointLight(0xffd79a, 3, 140); sunGlow.position.set(0, H * 0.55, END_Z + 8); scene.add(sunGlow);
+  // Sin disco sólido central (quedaba como un foco artificial). La luz del fondo
+  // viene solo de una luz cálida difusa, mucho más natural.
+  const sunGlow = new THREE.PointLight(0xffd79a, 2.4, 150); sunGlow.position.set(0, H * 0.55, END_Z + 8); scene.add(sunGlow);
 
   /* ---------- Estadio + OCTÁGONO con puerta abierta ---------- */
   const arena = new THREE.Group(); arena.position.set(0, 0, END_Z - 14); scene.add(arena);
@@ -185,9 +185,9 @@
       composer = new THREE.EffectComposer(renderer);
       composer.addPass(new THREE.RenderPass(scene, camera));
       bloomPass = new THREE.UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight),
-        isMobile ? 0.55 : 0.9,   // fuerza del bloom
-        0.6,                     // radio
-        0.82);                   // umbral (solo brilla lo muy luminoso)
+        isMobile ? 0.4 : 0.65,   // fuerza del bloom (más contenida)
+        0.5,                     // radio
+        0.9);                    // umbral alto: solo lo MUY brillante sangra luz
       composer.addPass(bloomPass);
       // aberración cromática + viñeta en un shader ligero
       const ChromaVignette = {
