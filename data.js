@@ -6,15 +6,16 @@
    - No inventamos récords ni títulos.
    - record: null  -> se muestra "sin verificar".
    - status: null  -> no se muestra ninguna etiqueta.
-   - Fotos: usamos un placeholder elegante si la URL falla.
+
+   FOTOS:
+   - Cada luchador usa un retrato generado en img/<nombre>.svg
+     (silueta deportiva + iniciales + color). Nunca se rompe.
+   - ¿Tienes una FOTO REAL con permiso? Guárdala en img/ (p. ej.
+     img/islam-makhachev.jpg) y cambia aquí "foto" a esa ruta.
    Última revisión editorial: 2026-10-27  (actualízala al editar)
    ============================================================ */
 
 const DATA_ACTUALIZADO = "2026-10-27";
-
-/* Fotos: dejamos vacío (""), la tarjeta pinta un avatar con la
-   inicial del luchador. Así nunca aparece una imagen rota.
-   Si tienes una URL fiable, pégala en "foto". */
 
 const ORGANIZACIONES = [
   {
@@ -25,12 +26,12 @@ const ORGANIZACIONES = [
     desc: "La mayor organización de MMA del mundo. Sede en Las Vegas.",
     color: "#d20a0a",
     luchadores: [
-      { nombre: "Islam Makhachev", pais: "Rusia", bandera: "🇷🇺", peso: "Depende de divisiones", sexo: "M", estilo: "Grappling / Sambo", record: null, status: null, foto: "" },
-      { nombre: "Alex Pereira", pais: "Brasil", bandera: "🇧🇷", peso: "Semipesado", sexo: "M", estilo: "Kickboxing", record: null, status: null, foto: "" },
-      { nombre: "Ilia Topuria", pais: "España / Georgia", bandera: "🇪🇸", peso: "Ligero (histórico pluma)", sexo: "M", estilo: "Boxeo / Grappling", record: null, status: null, foto: "" },
-      { nombre: "Tom Aspinall", pais: "Reino Unido", bandera: "🇬🇧", peso: "Pesado", sexo: "M", estilo: "Grappling / KO", record: null, status: null, foto: "" },
-      { nombre: "Dricus du Plessis", pais: "Sudáfrica", bandera: "🇿🇦", peso: "Medio", sexo: "M", estilo: "Presión / Grappling", record: null, status: null, foto: "" },
-      { nombre: "Zhang Weili", pais: "China", bandera: "🇨🇳", peso: "Paja (F)", sexo: "F", estilo: "Completa", record: null, status: null, foto: "" }
+      { nombre: "Islam Makhachev", pais: "Rusia", bandera: "🇷🇺", peso: "Depende de divisiones", sexo: "M", estilo: "Grappling / Sambo", record: null, status: null, foto: "img/islam-makhachev.svg" },
+      { nombre: "Alex Pereira", pais: "Brasil", bandera: "🇧🇷", peso: "Semipesado", sexo: "M", estilo: "Kickboxing", record: null, status: null, foto: "img/alex-pereira.svg" },
+      { nombre: "Ilia Topuria", pais: "España / Georgia", bandera: "🇪🇸", peso: "Ligero (histórico pluma)", sexo: "M", estilo: "Boxeo / Grappling", record: null, status: null, foto: "img/ilia-topuria.svg" },
+      { nombre: "Tom Aspinall", pais: "Reino Unido", bandera: "🇬🇧", peso: "Pesado", sexo: "M", estilo: "Grappling / KO", record: null, status: null, foto: "img/tom-aspinall.svg" },
+      { nombre: "Dricus du Plessis", pais: "Sudáfrica", bandera: "🇿🇦", peso: "Medio", sexo: "M", estilo: "Presión / Grappling", record: null, status: null, foto: "img/dricus-du-plessis.svg" },
+      { nombre: "Zhang Weili", pais: "China", bandera: "🇨🇳", peso: "Paja (F)", sexo: "F", estilo: "Completa", record: null, status: null, foto: "img/zhang-weili.svg" }
     ]
   },
   {
@@ -41,8 +42,8 @@ const ORGANIZACIONES = [
     desc: "Formato de liga con temporada regular, play-offs y final por premio.",
     color: "#e8a600",
     luchadores: [
-      { nombre: "Francis Ngannou", pais: "Camerún", bandera: "🇨🇲", peso: "Pesado", sexo: "M", estilo: "KO / Potencia", record: null, status: null, foto: "" },
-      { nombre: "Jakob Nedoh", pais: "Eslovenia", bandera: "🇸🇮", peso: "Variable", sexo: "M", estilo: "Completa", record: null, status: null, foto: "" }
+      { nombre: "Francis Ngannou", pais: "Camerún", bandera: "🇨🇲", peso: "Pesado", sexo: "M", estilo: "KO / Potencia", record: null, status: null, foto: "img/francis-ngannou.svg" },
+      { nombre: "Jakob Nedoh", pais: "Eslovenia", bandera: "🇸🇮", peso: "Variable", sexo: "M", estilo: "Completa", record: null, status: null, foto: "img/jakob-nedoh.svg" }
     ]
   },
   {
@@ -53,8 +54,8 @@ const ORGANIZACIONES = [
     desc: "Gran organización asiática. Mezcla MMA, Muay Thai y kickboxing.",
     color: "#c8102e",
     luchadores: [
-      { nombre: "Anatoly Malykhin", pais: "Rusia", bandera: "🇷🇺", peso: "Pesado / Semipesado", sexo: "M", estilo: "KO / Lucha", record: null, status: null, foto: "" },
-      { nombre: "Demetrious Johnson", pais: "Estados Unidos", bandera: "🇺🇸", peso: "Mosca", sexo: "M", estilo: "Técnico / Completa", record: null, status: null, foto: "" }
+      { nombre: "Anatoly Malykhin", pais: "Rusia", bandera: "🇷🇺", peso: "Pesado / Semipesado", sexo: "M", estilo: "KO / Lucha", record: null, status: null, foto: "img/anatoly-malykhin.svg" },
+      { nombre: "Demetrious Johnson", pais: "Estados Unidos", bandera: "🇺🇸", peso: "Mosca", sexo: "M", estilo: "Técnico / Completa", record: null, status: null, foto: "img/demetrious-johnson.svg" }
     ]
   },
   {
@@ -65,8 +66,8 @@ const ORGANIZACIONES = [
     desc: "Espectáculo japonés. Grandes eventos de fin de año.",
     color: "#ff2d55",
     luchadores: [
-      { nombre: "Kleber Koike", pais: "Brasil / Japón", bandera: "🇧🇷", peso: "Pluma", sexo: "M", estilo: "Jiu-Jitsu", record: null, status: null, foto: "" },
-      { nombre: "Roberto de Souza", pais: "Brasil", bandera: "🇧🇷", peso: "Ligero", sexo: "M", estilo: "Grappling", record: null, status: null, foto: "" }
+      { nombre: "Kleber Koike", pais: "Brasil / Japón", bandera: "🇧🇷", peso: "Pluma", sexo: "M", estilo: "Jiu-Jitsu", record: null, status: null, foto: "img/kleber-koike.svg" },
+      { nombre: "Roberto de Souza", pais: "Brasil", bandera: "🇧🇷", peso: "Ligero", sexo: "M", estilo: "Grappling", record: null, status: null, foto: "img/roberto-de-souza.svg" }
     ]
   },
   {
@@ -77,7 +78,7 @@ const ORGANIZACIONES = [
     desc: "Gran crecimiento en Europa central. Eventos en estadios.",
     color: "#ff8800",
     luchadores: [
-      { nombre: "Losene Keita", pais: "Bélgica / Guinea", bandera: "🇧🇪", peso: "Pluma", sexo: "M", estilo: "Completa", record: null, status: null, foto: "" }
+      { nombre: "Losene Keita", pais: "Bélgica / Guinea", bandera: "🇧🇪", peso: "Pluma", sexo: "M", estilo: "Completa", record: null, status: null, foto: "img/losene-keita.svg" }
     ]
   },
   {
@@ -88,7 +89,7 @@ const ORGANIZACIONES = [
     desc: "La organización líder en Polonia. Grandes veladas.",
     color: "#e4002b",
     luchadores: [
-      { nombre: "Mateusz Gamrot (histórico)", pais: "Polonia", bandera: "🇵🇱", peso: "Ligero", sexo: "M", estilo: "Grappling", record: null, status: null, foto: "" }
+      { nombre: "Mateusz Gamrot (histórico)", pais: "Polonia", bandera: "🇵🇱", peso: "Ligero", sexo: "M", estilo: "Grappling", record: null, status: null, foto: "img/mateusz-gamrot-historico.svg" }
     ]
   },
   {
@@ -99,7 +100,7 @@ const ORGANIZACIONES = [
     desc: "Cantera europea. De aquí han salido campeones de UFC.",
     color: "#b31217",
     luchadores: [
-      { nombre: "Promesas europeas (variable)", pais: "Europa", bandera: "🇪🇺", peso: "Varias", sexo: "M", estilo: "Varias", record: null, status: null, foto: "" }
+      { nombre: "Promesas europeas (variable)", pais: "Europa", bandera: "🇪🇺", peso: "Varias", sexo: "M", estilo: "Varias", record: null, status: null, foto: "img/promesas-europeas-variable.svg" }
     ]
   },
   {
@@ -110,22 +111,21 @@ const ORGANIZACIONES = [
     desc: "Trampolín estadounidense hacia las grandes ligas.",
     color: "#1f6feb",
     luchadores: [
-      { nombre: "Prospectos norteamericanos (variable)", pais: "Norteamérica", bandera: "🇺🇸", peso: "Varias", sexo: "M", estilo: "Varias", record: null, status: null, foto: "" }
+      { nombre: "Prospectos norteamericanos (variable)", pais: "Norteamérica", bandera: "🇺🇸", peso: "Varias", sexo: "M", estilo: "Varias", record: null, status: null, foto: "img/prospectos-norteamericanos-variable.svg" }
     ]
   }
 ];
 
-/* Ranking P4P — CLASIFICACIÓN EDITORIAL PROPIA, no oficial.
-   Orden por nombre destacado; edítalo libremente. */
+/* Ranking P4P — CLASIFICACIÓN EDITORIAL PROPIA, no oficial. */
 const P4P = {
   actualizado: "2026-10-27",
   fuente: "Clasificación editorial propia (no oficial)",
   lista: [
-    { pos: 1, nombre: "Islam Makhachev", org: "UFC", peso: "—", motivo: "Dominio prolongado y grappling de élite.", foto: "" },
-    { pos: 2, nombre: "Ilia Topuria", org: "UFC", peso: "—", motivo: "Invicto con gran poder y técnica.", foto: "" },
-    { pos: 3, nombre: "Alex Pereira", org: "UFC", peso: "—", motivo: "Pegada demoledora, varios títulos.", foto: "" },
-    { pos: 4, nombre: "Tom Aspinall", org: "UFC", peso: "—", motivo: "Pesado rápido y finalizador.", foto: "" },
-    { pos: 5, nombre: "Dricus du Plessis", org: "UFC", peso: "—", motivo: "Ritmo altísimo y presión constante.", foto: "" }
+    { pos: 1, nombre: "Islam Makhachev", org: "UFC", peso: "—", motivo: "Dominio prolongado y grappling de élite.", foto: "img/islam-makhachev.svg" },
+    { pos: 2, nombre: "Ilia Topuria", org: "UFC", peso: "—", motivo: "Invicto con gran poder y técnica.", foto: "img/ilia-topuria.svg" },
+    { pos: 3, nombre: "Alex Pereira", org: "UFC", peso: "—", motivo: "Pegada demoledora, varios títulos.", foto: "img/alex-pereira.svg" },
+    { pos: 4, nombre: "Tom Aspinall", org: "UFC", peso: "—", motivo: "Pesado rápido y finalizador.", foto: "img/tom-aspinall.svg" },
+    { pos: 5, nombre: "Dricus du Plessis", org: "UFC", peso: "—", motivo: "Ritmo altísimo y presión constante.", foto: "img/dricus-du-plessis.svg" }
   ]
 };
 
