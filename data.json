@@ -6,11 +6,11 @@
       "id": "ufc", "nombre": "UFC", "nombreLargo": "Ultimate Fighting Championship", "pais": "Estados Unidos",
       "desc": "La mayor organizacion de MMA del mundo. Sede en Las Vegas.", "color": "#d20a0a",
       "luchadores": [
-        { "nombre": "Islam Makhachev", "pais": "Rusia", "bandera": "🇷🇺", "peso": "Depende de divisiones", "sexo": "M", "estilo": "Grappling / Sambo", "record": null, "status": null, "altura": null, "alcance": null, "foto": "img/islam-makhachev.svg", "credito": null, "licencia": null },
+        { "nombre": "Islam Makhachev", "pais": "Rusia", "bandera": "🇷🇺", "peso": "Welter", "sexo": "M", "estilo": "Grappling / Sambo", "record": "29-1", "status": "Campeon welter", "altura": null, "alcance": null, "foto": "img/islam-makhachev.svg", "credito": null, "licencia": null },
         { "nombre": "Alex Pereira", "pais": "Brasil", "bandera": "🇧🇷", "peso": "Semipesado", "sexo": "M", "estilo": "Kickboxing", "record": null, "status": null, "altura": null, "alcance": null, "foto": "img/alex-pereira.jpg", "credito": "Wikimedia Commons", "licencia": "CC BY 3.0" },
-        { "nombre": "Ilia Topuria", "pais": "España / Georgia", "bandera": "🇪🇸", "peso": "Ligero (historico pluma)", "sexo": "M", "estilo": "Boxeo / Grappling", "record": null, "status": null, "altura": null, "alcance": null, "foto": "img/ilia-topuria.jpg", "credito": "Wikimedia Commons", "licencia": "CC BY 4.0" },
-        { "nombre": "Tom Aspinall", "pais": "Reino Unido", "bandera": "🇬🇧", "peso": "Pesado", "sexo": "M", "estilo": "Grappling / KO", "record": null, "status": null, "altura": null, "alcance": null, "foto": "img/tom-aspinall.svg", "credito": null, "licencia": null },
-        { "nombre": "Dricus du Plessis", "pais": "Sudafrica", "bandera": "🇿🇦", "peso": "Medio", "sexo": "M", "estilo": "Presion / Grappling", "record": null, "status": null, "altura": null, "alcance": null, "foto": "img/dricus-du-plessis.svg", "credito": null, "licencia": null },
+        { "nombre": "Ilia Topuria", "pais": "España / Georgia", "bandera": "🇪🇸", "peso": "Ligero", "sexo": "M", "estilo": "Boxeo / Grappling", "record": "17-1", "status": "Excampeon ligero", "altura": null, "alcance": null, "foto": "img/ilia-topuria.jpg", "credito": "Wikimedia Commons", "licencia": "CC BY 4.0" },
+        { "nombre": "Tom Aspinall", "pais": "Reino Unido", "bandera": "🇬🇧", "peso": "Pesado", "sexo": "M", "estilo": "Grappling / KO", "record": "15-3 (1 NC)", "status": "Renuncio al titulo (lesion)", "altura": null, "alcance": null, "foto": "img/tom-aspinall.svg", "credito": null, "licencia": null },
+        { "nombre": "Dricus du Plessis", "pais": "Sudafrica", "bandera": "🇿🇦", "peso": "Medio", "sexo": "M", "estilo": "Presion / Grappling", "record": null, "status": "Excampeon medio", "altura": null, "alcance": null, "foto": "img/dricus-du-plessis.svg", "credito": null, "licencia": null },
         { "nombre": "Zhang Weili", "pais": "China", "bandera": "🇨🇳", "peso": "Paja (F)", "sexo": "F", "estilo": "Completa", "record": null, "status": null, "altura": null, "alcance": null, "foto": "img/zhang-weili.jpg", "credito": "Wikimedia Commons", "licencia": "CC BY 3.0" },
         { "nombre": "Merab Dvalishvili", "pais": "Georgia", "bandera": "🇬🇪", "peso": "Gallo", "sexo": "M", "estilo": "Lucha / Ritmo", "record": null, "status": null, "altura": null, "alcance": null, "foto": "img/merab-dvalishvili.svg", "credito": null, "licencia": null }
       ]
@@ -27,7 +27,7 @@
       "id": "one", "nombre": "ONE", "nombreLargo": "ONE Championship", "pais": "Singapur",
       "desc": "Gran organizacion asiatica. Mezcla MMA, Muay Thai y kickboxing.", "color": "#c8102e",
       "luchadores": [
-        { "nombre": "Anatoly Malykhin", "pais": "Rusia", "bandera": "🇷🇺", "peso": "Pesado / Semipesado", "sexo": "M", "estilo": "KO / Lucha", "record": null, "status": null, "altura": null, "alcance": null, "foto": "img/anatoly-malykhin.svg", "credito": null, "licencia": null },
+        { "nombre": "Anatoly Malykhin", "pais": "Rusia", "bandera": "🇷🇺", "peso": "Pesado / Semipesado", "sexo": "M", "estilo": "KO / Lucha", "record": "15-1", "status": "Campeon pesado ONE (retirado)", "altura": null, "alcance": null, "foto": "img/anatoly-malykhin.svg", "credito": null, "licencia": null },
         { "nombre": "Demetrious Johnson", "pais": "Estados Unidos", "bandera": "🇺🇸", "peso": "Mosca", "sexo": "M", "estilo": "Tecnico / Completa", "record": null, "status": null, "altura": null, "alcance": null, "foto": "img/demetrious-johnson.svg", "credito": null, "licencia": null }
       ]
     },
