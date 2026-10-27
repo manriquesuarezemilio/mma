@@ -1,24 +1,29 @@
 # EL UNIVERSO MMA
 
-Web moderna sobre artes marciales mixtas: organizaciones, luchadores, ranking P4P, combates, noticias, disciplinas y reglas.
+Plataforma premium de artes marciales mixtas: organizaciones, luchadores, ranking P4P, cara a cara, combates, noticias, disciplinas y reglas.
 
 ## Estructura
 - `index.html` — estructura de la página.
-- `style.css` — estilos (tema oscuro, rojo, responsive, animaciones).
-- `app.js` — interactividad (acordeones, buscador, filtros, modales, navegación).
-- `data.js` — **datos editables** (organizaciones, luchadores, ranking, noticias…).
+- `style.css` — estilos (tema oscuro/claro, animaciones, responsive).
+- `app.js` — interactividad (acordeones, buscador, comparador, modales, countdown…).
+- `data.js` — **cargador**: lee `data.json` (con respaldo embebido si no hay servidor).
+- `data.json` — **todos los datos editables** (organizaciones, luchadores, ranking, combates, noticias).
+- `img/` — retratos. SVG generados por defecto; algunas fotos reales con licencia libre.
 
-## Cómo editar los datos
-Abre `data.js` y edita las listas. Reglas:
-- No se inventan récords ni títulos.
-- `record: null` → se muestra "sin verificar".
-- `status: null` → no se muestra etiqueta de campeón.
-- Para fotos reales, pon una URL fiable en el campo `foto`. Si falla, la tarjeta muestra la inicial.
-- El ranking P4P es una **clasificación editorial propia, no oficial**.
-- Las noticias y los próximos combates son **contenido de demostración**.
+## Editar los datos
+Abre `data.json`. Reglas que seguimos:
+- No se inventan récords, títulos ni combates.
+- `record`, `status`, `altura`, `alcance` en `null` → se muestran como "sin verificar".
+- Ranking P4P: **clasificación editorial propia, no oficial**.
+- Noticias y combates: **contenido de demostración**.
+- Para una foto real: guarda la imagen en `img/` y pon su ruta en `foto`. Si la foto tiene licencia (CC), rellena `credito` y `licencia` — se muestran en el perfil.
 
-Actualiza la fecha `DATA_ACTUALIZADO` al cambiar datos.
+Actualiza `actualizado` al cambiar datos.
+
+## Créditos de fotos
+Algunas fotos proceden de Wikimedia Commons con licencia Creative Commons (CC BY / CC BY-SA). El crédito y la licencia se muestran en el perfil de cada luchador. Las demás usan un retrato SVG generado.
 
 ## Ver la web
-Abre `index.html` en el navegador, o visita la versión publicada:
-https://manriquesuarezemilio.github.io/mma/
+Ábrela desde un servidor (o publicada). Al abrir el archivo directamente con `file://`, el navegador bloquea la carga de `data.json` y se usa un respaldo reducido.
+
+Versión publicada: https://manriquesuarezemilio.github.io/mma/

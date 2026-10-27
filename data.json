@@ -1,0 +1,118 @@
+{
+  "_nota": "Datos editables. No se inventan records ni titulos. record/status/altura/alcance = null => se muestra 'sin verificar'. Fotos reales llevan credito (campos credito/licencia). Rankings/noticias/combates son editoriales o demostracion.",
+  "actualizado": "2026-10-27",
+  "organizaciones": [
+    {
+      "id": "ufc", "nombre": "UFC", "nombreLargo": "Ultimate Fighting Championship", "pais": "Estados Unidos",
+      "desc": "La mayor organizacion de MMA del mundo. Sede en Las Vegas.", "color": "#d20a0a",
+      "luchadores": [
+        { "nombre": "Islam Makhachev", "pais": "Rusia", "bandera": "🇷🇺", "peso": "Depende de divisiones", "sexo": "M", "estilo": "Grappling / Sambo", "record": null, "status": null, "altura": null, "alcance": null, "foto": "img/islam-makhachev.svg", "credito": null, "licencia": null },
+        { "nombre": "Alex Pereira", "pais": "Brasil", "bandera": "🇧🇷", "peso": "Semipesado", "sexo": "M", "estilo": "Kickboxing", "record": null, "status": null, "altura": null, "alcance": null, "foto": "img/alex-pereira.jpg", "credito": "Wikimedia Commons", "licencia": "CC BY 3.0" },
+        { "nombre": "Ilia Topuria", "pais": "España / Georgia", "bandera": "🇪🇸", "peso": "Ligero (historico pluma)", "sexo": "M", "estilo": "Boxeo / Grappling", "record": null, "status": null, "altura": null, "alcance": null, "foto": "img/ilia-topuria.jpg", "credito": "Wikimedia Commons", "licencia": "CC BY 4.0" },
+        { "nombre": "Tom Aspinall", "pais": "Reino Unido", "bandera": "🇬🇧", "peso": "Pesado", "sexo": "M", "estilo": "Grappling / KO", "record": null, "status": null, "altura": null, "alcance": null, "foto": "img/tom-aspinall.svg", "credito": null, "licencia": null },
+        { "nombre": "Dricus du Plessis", "pais": "Sudafrica", "bandera": "🇿🇦", "peso": "Medio", "sexo": "M", "estilo": "Presion / Grappling", "record": null, "status": null, "altura": null, "alcance": null, "foto": "img/dricus-du-plessis.svg", "credito": null, "licencia": null },
+        { "nombre": "Zhang Weili", "pais": "China", "bandera": "🇨🇳", "peso": "Paja (F)", "sexo": "F", "estilo": "Completa", "record": null, "status": null, "altura": null, "alcance": null, "foto": "img/zhang-weili.jpg", "credito": "Wikimedia Commons", "licencia": "CC BY 3.0" },
+        { "nombre": "Merab Dvalishvili", "pais": "Georgia", "bandera": "🇬🇪", "peso": "Gallo", "sexo": "M", "estilo": "Lucha / Ritmo", "record": null, "status": null, "altura": null, "alcance": null, "foto": "img/merab-dvalishvili.svg", "credito": null, "licencia": null }
+      ]
+    },
+    {
+      "id": "pfl", "nombre": "PFL", "nombreLargo": "Professional Fighters League", "pais": "Estados Unidos",
+      "desc": "Formato de liga con temporada regular, play-offs y final por premio.", "color": "#e8a600",
+      "luchadores": [
+        { "nombre": "Francis Ngannou", "pais": "Camerun", "bandera": "🇨🇲", "peso": "Pesado", "sexo": "M", "estilo": "KO / Potencia", "record": null, "status": null, "altura": null, "alcance": null, "foto": "img/francis-ngannou.svg", "credito": null, "licencia": null },
+        { "nombre": "Jakob Nedoh", "pais": "Eslovenia", "bandera": "🇸🇮", "peso": "Variable", "sexo": "M", "estilo": "Completa", "record": null, "status": null, "altura": null, "alcance": null, "foto": "img/jakob-nedoh.svg", "credito": null, "licencia": null }
+      ]
+    },
+    {
+      "id": "one", "nombre": "ONE", "nombreLargo": "ONE Championship", "pais": "Singapur",
+      "desc": "Gran organizacion asiatica. Mezcla MMA, Muay Thai y kickboxing.", "color": "#c8102e",
+      "luchadores": [
+        { "nombre": "Anatoly Malykhin", "pais": "Rusia", "bandera": "🇷🇺", "peso": "Pesado / Semipesado", "sexo": "M", "estilo": "KO / Lucha", "record": null, "status": null, "altura": null, "alcance": null, "foto": "img/anatoly-malykhin.svg", "credito": null, "licencia": null },
+        { "nombre": "Demetrious Johnson", "pais": "Estados Unidos", "bandera": "🇺🇸", "peso": "Mosca", "sexo": "M", "estilo": "Tecnico / Completa", "record": null, "status": null, "altura": null, "alcance": null, "foto": "img/demetrious-johnson.svg", "credito": null, "licencia": null }
+      ]
+    },
+    {
+      "id": "rizin", "nombre": "RIZIN", "nombreLargo": "Rizin Fighting Federation", "pais": "Japon",
+      "desc": "Espectaculo japones. Grandes eventos de fin de año.", "color": "#ff2d55",
+      "luchadores": [
+        { "nombre": "Kleber Koike", "pais": "Brasil / Japon", "bandera": "🇧🇷", "peso": "Pluma", "sexo": "M", "estilo": "Jiu-Jitsu", "record": null, "status": null, "altura": null, "alcance": null, "foto": "img/kleber-koike.jpg", "credito": "Wikimedia Commons", "licencia": "CC BY 3.0" },
+        { "nombre": "Roberto de Souza", "pais": "Brasil", "bandera": "🇧🇷", "peso": "Ligero", "sexo": "M", "estilo": "Grappling", "record": null, "status": null, "altura": null, "alcance": null, "foto": "img/roberto-de-souza.svg", "credito": null, "licencia": null }
+      ]
+    },
+    {
+      "id": "oktagon", "nombre": "OKTAGON", "nombreLargo": "Oktagon MMA", "pais": "Chequia / Eslovaquia",
+      "desc": "Gran crecimiento en Europa central. Eventos en estadios.", "color": "#ff8800",
+      "luchadores": [
+        { "nombre": "Losene Keita", "pais": "Belgica / Guinea", "bandera": "🇧🇪", "peso": "Pluma", "sexo": "M", "estilo": "Completa", "record": null, "status": null, "altura": null, "alcance": null, "foto": "img/losene-keita.svg", "credito": null, "licencia": null }
+      ]
+    },
+    {
+      "id": "ksw", "nombre": "KSW", "nombreLargo": "Konfrontacja Sztuk Walki", "pais": "Polonia",
+      "desc": "La organizacion lider en Polonia. Grandes veladas.", "color": "#e4002b",
+      "luchadores": [
+        { "nombre": "Mateusz Gamrot (historico)", "pais": "Polonia", "bandera": "🇵🇱", "peso": "Ligero", "sexo": "M", "estilo": "Grappling", "record": null, "status": null, "altura": null, "alcance": null, "foto": "img/mateusz-gamrot.jpg", "credito": "Wikimedia Commons", "licencia": "CC BY 3.0" }
+      ]
+    },
+    {
+      "id": "cw", "nombre": "Cage Warriors", "nombreLargo": "Cage Warriors", "pais": "Reino Unido",
+      "desc": "Cantera europea. De aqui han salido campeones de UFC.", "color": "#b31217",
+      "luchadores": [
+        { "nombre": "Promesas europeas (variable)", "pais": "Europa", "bandera": "🇪🇺", "peso": "Varias", "sexo": "M", "estilo": "Varias", "record": null, "status": null, "altura": null, "alcance": null, "foto": "img/promesas-europeas-variable.svg", "credito": null, "licencia": null }
+      ]
+    },
+    {
+      "id": "lfa", "nombre": "LFA", "nombreLargo": "Legacy Fighting Alliance", "pais": "Estados Unidos",
+      "desc": "Trampolin estadounidense hacia las grandes ligas.", "color": "#1f6feb",
+      "luchadores": [
+        { "nombre": "Prospectos norteamericanos (variable)", "pais": "Norteamerica", "bandera": "🇺🇸", "peso": "Varias", "sexo": "M", "estilo": "Varias", "record": null, "status": null, "altura": null, "alcance": null, "foto": "img/prospectos-norteamericanos-variable.svg", "credito": null, "licencia": null }
+      ]
+    }
+  ],
+  "p4p": {
+    "actualizado": "2026-10-27",
+    "fuente": "Clasificacion editorial propia (no oficial)",
+    "lista": [
+      { "pos": 1, "nombre": "Islam Makhachev", "org": "UFC", "peso": "—", "motivo": "Dominio prolongado y grappling de elite." },
+      { "pos": 2, "nombre": "Ilia Topuria", "org": "UFC", "peso": "—", "motivo": "Invicto con gran poder y tecnica." },
+      { "pos": 3, "nombre": "Alex Pereira", "org": "UFC", "peso": "—", "motivo": "Pegada demoledora, varios titulos." },
+      { "pos": 4, "nombre": "Tom Aspinall", "org": "UFC", "peso": "—", "motivo": "Pesado rapido y finalizador." },
+      { "pos": 5, "nombre": "Dricus du Plessis", "org": "UFC", "peso": "—", "motivo": "Ritmo altisimo y presion constante." },
+      { "pos": 6, "nombre": "Merab Dvalishvili", "org": "UFC", "peso": "—", "motivo": "Ritmo y lucha incansables." }
+    ]
+  },
+  "noticias": [
+    { "fecha": "2026-10-20", "destacada": true, "org": "UFC", "tag": "Noticia", "titulo": "Ejemplo: se anuncia la cartelera de fin de año", "resumen": "Contenido de demostracion. Conecta una fuente real para datos en vivo.", "cuerpo": "Noticia de ejemplo para mostrar el diseño. No procede de una fuente real. Editala en data.json." },
+    { "fecha": "2026-10-18", "destacada": false, "org": "OKTAGON", "tag": "Entrevista", "titulo": "Ejemplo: entrevista a una promesa europea", "resumen": "Contenido de demostracion.", "cuerpo": "Texto de ejemplo. Editalo en data.json." },
+    { "fecha": "2026-10-16", "destacada": false, "org": "PFL", "tag": "Analisis", "titulo": "Ejemplo: analisis de una division", "resumen": "Contenido de demostracion.", "cuerpo": "Texto de ejemplo. Editalo en data.json." },
+    { "fecha": "2026-10-15", "destacada": false, "org": "UFC", "tag": "Resultado", "titulo": "Ejemplo: resultado de una velada", "resumen": "Contenido de demostracion.", "cuerpo": "Texto de ejemplo. Editalo en data.json." }
+  ],
+  "proximos": [
+    { "estado": "next", "evento": "Evento de ejemplo · Estelar", "org": "UFC", "peso": "Pesado", "when": "2026-12-31T23:00:00Z", "main": true, "verificado": false, "a": { "nombre": "Luchador A", "bandera": "🏳️" }, "b": { "nombre": "Luchador B", "bandera": "🏳️" } },
+    { "estado": "next", "evento": "Evento de ejemplo 2", "org": "PFL", "peso": "Ligero", "when": "2027-01-15T22:00:00Z", "main": false, "verificado": false, "a": { "nombre": "Luchador C", "bandera": "🏳️" }, "b": { "nombre": "Luchador D", "bandera": "🏳️" } },
+    { "estado": "next", "evento": "Evento de ejemplo 3", "org": "ONE", "peso": "Pluma", "when": null, "main": false, "verificado": false, "a": { "nombre": "Luchador E", "bandera": "🏳️" }, "b": { "nombre": "Luchador F", "bandera": "🏳️" } },
+    { "estado": "past", "evento": "Evento pasado (demo)", "org": "UFC", "peso": "Medio", "when": null, "main": false, "verificado": false, "a": { "nombre": "Luchador G", "bandera": "🏳️" }, "b": { "nombre": "Luchador H", "bandera": "🏳️" } }
+  ],
+  "categorias": [
+    { "div": "Peso paja", "kg": "hasta 52,2 kg", "sexo": "F" },
+    { "div": "Peso mosca", "kg": "hasta 56,7 kg", "sexo": "M/F" },
+    { "div": "Peso gallo", "kg": "hasta 61,2 kg", "sexo": "M/F" },
+    { "div": "Peso pluma", "kg": "hasta 65,8 kg", "sexo": "M/F" },
+    { "div": "Peso ligero", "kg": "hasta 70,3 kg", "sexo": "M" },
+    { "div": "Peso welter", "kg": "hasta 77,1 kg", "sexo": "M" },
+    { "div": "Peso medio", "kg": "hasta 83,9 kg", "sexo": "M" },
+    { "div": "Peso semipesado", "kg": "hasta 93,0 kg", "sexo": "M" },
+    { "div": "Peso pesado", "kg": "hasta 120,2 kg", "sexo": "M" }
+  ],
+  "disciplinas": [
+    { "nombre": "Boxeo", "icono": "🥊", "desc": "Golpes de puños, juego de pies y defensa." },
+    { "nombre": "Muay Thai", "icono": "🦵", "desc": "Puños, codos, rodillas y patadas: el arte de las ocho armas." },
+    { "nombre": "Lucha", "icono": "🤼", "desc": "Derribos y control del rival en el suelo." },
+    { "nombre": "Jiu-Jitsu", "icono": "🥋", "desc": "Llaves y estrangulaciones para forzar la rendicion." }
+  ],
+  "reglas": [
+    { "t": "Asaltos", "icono": "⏱️", "d": "Normalmente 3 asaltos de 5 min; los combates de titulo, 5. Varia por competicion." },
+    { "t": "Formas de ganar", "icono": "🏆", "d": "KO, TKO (parada del arbitro), sumision o decision de los jueces." },
+    { "t": "Faltas", "icono": "🚫", "d": "Prohibido golpear nuca y columna, meter dedos en los ojos, morder o tirar del pelo." },
+    { "t": "Golpes al suelo", "icono": "⬇️", "d": "Algunas reglas prohiben rodillazos o patadas a un rival derribado. Depende del reglamento." }
+  ]
+}

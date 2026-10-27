@@ -5,6 +5,11 @@
    ============================================================ */
 (function () {
   "use strict";
+  // data.js carga data.json de forma asincrona. Arrancamos cuando los datos esten listos.
+  if (window.MMA) boot();
+  else window.addEventListener("mma:data", boot, { once: true });
+
+  function boot() {
   const D = window.MMA;
   if (!D) { console.error("No se cargó data.js"); return; }
 
@@ -192,6 +197,24 @@
     if (sFil.sexo) act.push(["sexo", sFil.sexo === "M" ? "Masculino" : "Femenino"]);
     chips.innerHTML = act.map(([k, t]) => `<span class="ac" data-k="${k}">${esc(t)}</span>`).join("");
     $$(".ac", chips).forEach(c => c.addEventListener("click", () => { const k = c.dataset.k; sFil[k] = ""; syncInputs(); renderSearch(); }));
+    writeUrl();
+  }
+  function writeUrl() {
+    const qs = new URLSearchParams();
+    if (sFil.q) qs.set("q", sFil.q);
+    if (sFil.org) qs.set("org", sFil.org);
+    if (sFil.peso) qs.set("peso", sFil.peso);
+    if (sFil.pais) qs.set("pais", sFil.pais);
+    if (sFil.sexo) qs.set("sexo", sFil.sexo);
+    const s = qs.toString();
+    history.replaceState(null, "", location.pathname + (s ? "?" + s : "") + (location.hash || ""));
+  }
+  function readUrl() {
+    const qs = new URLSearchParams(location.search);
+    sFil.q = (qs.get("q") || "").toLowerCase();
+    sFil.org = qs.get("org") || ""; sFil.peso = qs.get("peso") || "";
+    sFil.pais = qs.get("pais") || ""; sFil.sexo = qs.get("sexo") || "";
+    syncInputs();
   }
   function syncInputs() { $("#fSearch").value = sFil.q; $("#fOrg").value = sFil.org; $("#fPeso").value = sFil.peso; $("#fPais").value = sFil.pais; $("#fSexo").value = sFil.sexo; }
   function clearSearch() { Object.keys(sFil).forEach(k => sFil[k] = ""); syncInputs(); renderSearch(); }
@@ -240,6 +263,8 @@
     return `<div class="vs-side"><div class="vs-ava" ${bg}>${inner}</div><h4>${esc(l.nombre)}</h4><p class="fighter-line">${esc(l.bandera || "")} ${esc(l.pais)}</p>
       <div class="vs-row"><span>Liga</span><strong>${esc(l.org)}</strong></div>
       <div class="vs-row"><span>Categoría</span><strong>${esc(l.peso)}</strong></div>
+      <div class="vs-row"><span>Altura</span><strong>${dato(l.altura)}</strong></div>
+      <div class="vs-row"><span>Alcance</span><strong>${dato(l.alcance)}</strong></div>
       <div class="vs-row"><span>Estilo</span><strong>${dato(l.estilo)}</strong></div>
       <div class="vs-row"><span>Récord</span><strong>${dato(l.record)}</strong></div>
       <div class="vs-row"><span>Estatus</span><strong>${dato(l.status)}</strong></div></div>`;
@@ -270,8 +295,11 @@
         <div class="mg"><span>Estilo</span><strong>${dato(l.estilo)}</strong></div>
         <div class="mg"><span>Récord</span><strong>${dato(l.record)}</strong></div>
         <div class="mg"><span>Estatus</span><strong>${dato(l.status)}</strong></div>
+        <div class="mg"><span>Altura</span><strong>${dato(l.altura)}</strong></div>
+        <div class="mg"><span>Alcance</span><strong>${dato(l.alcance)}</strong></div>
       </div>
-      <p class="modal-note">Los datos «Sin verificar» no se muestran como oficiales. Edita <code>data.js</code> con fuentes fiables. Revisión: ${esc(D.DATA_ACTUALIZADO)}.</p>`;
+      ${l.credito ? `<p class="modal-note" style="border-color:var(--line)">Foto: ${esc(l.credito)} · ${esc(l.licencia || "")}</p>` : ""}
+      <p class="modal-note">Los datos «Sin verificar» no se muestran como oficiales. Edita <code>data.json</code> con fuentes fiables. Revisión: ${esc(D.DATA_ACTUALIZADO)}.</p>`;
     modal.hidden = false; document.body.style.overflow = "hidden"; $(".modal-close", modal).focus();
     $("#mFav").addEventListener("click", () => { toggleFav(k); closeModal(); });
     $("#mShare").addEventListener("click", () => { if (navigator.clipboard) navigator.clipboard.writeText(url).then(() => toast("Enlace copiado 🔗"), () => toast(url)); else toast(url); });
@@ -347,5 +375,7 @@
   $("#footMeta").textContent = `Datos editables en data.js. Revisión: ${D.DATA_ACTUALIZADO}. Récords y estatus no verificados se marcan como tales. Rankings, noticias y combates son editoriales o de demostración.`;
 
   /* ===== Init ===== */
+  readUrl();
   renderOrgs([]); renderSearch(); renderP4P("pos"); renderVs(); renderFights(); renderNews(); fromHash();
+  } // boot
 })();
