@@ -78,10 +78,12 @@
 
   /* ===== HERO: parallax + partículas + typewriter ===== */
   const heroBg = $("#heroBg");
+  const heroTint = document.querySelector(".hero-tint");
   if (!reduce) {
     window.addEventListener("mousemove", (e) => {
-      const x = (e.clientX / window.innerWidth - .5) * 18, y = (e.clientY / window.innerHeight - .5) * 18;
-      heroBg.style.transform = `translate(${x}px,${y}px) scale(1.08)`;
+      const x = (e.clientX / window.innerWidth - .5) * 14, y = (e.clientY / window.innerHeight - .5) * 14;
+      // Movemos la CAPA DE COLOR, no la foto: así el zoom lento (Ken Burns) del fondo no se pisa.
+      if (heroTint) heroTint.style.transform = `translate(${x}px,${y}px)`;
     });
     const pc = $("#heroParticles");
     for (let i = 0; i < 28; i++) { const p = document.createElement("span"); p.className = "p"; p.style.left = Math.random() * 100 + "%"; p.style.animationDuration = (5 + Math.random() * 7) + "s"; p.style.animationDelay = (-Math.random() * 10) + "s"; p.style.opacity = (.2 + Math.random() * .5).toFixed(2); pc.appendChild(p); }
