@@ -87,6 +87,22 @@
   // viene solo de una luz cálida difusa, mucho más natural.
   const sunGlow = new THREE.PointLight(0xffd79a, 2.4, 150); sunGlow.position.set(0, H * 0.55, END_Z + 8); scene.add(sunGlow);
 
+  /* ---------- PUERTA al final del pasillo ---------- */
+  const door = new THREE.Group(); door.position.set(0, 0, END_Z + 1); scene.add(door);
+  const doorFrameMat = new THREE.MeshStandardMaterial({ color: 0x17171c, metalness: 0.8, roughness: 0.35 });
+  // marco (dos jambas + dintel)
+  const jambGeo = new THREE.BoxGeometry(0.4, H, 0.6);
+  const jL = new THREE.Mesh(jambGeo, doorFrameMat); jL.position.set(-W / 2 + 0.2, H / 2, 0); door.add(jL);
+  const jR = new THREE.Mesh(jambGeo, doorFrameMat); jR.position.set(W / 2 - 0.2, H / 2, 0); door.add(jR);
+  const lintel = new THREE.Mesh(new THREE.BoxGeometry(W, 0.5, 0.6), doorFrameMat); lintel.position.set(0, H - 0.25, 0); door.add(lintel);
+  // dintel iluminado (barra LED cálida sobre la puerta)
+  const sign = new THREE.Mesh(new THREE.BoxGeometry(W - 1, 0.12, 0.1), new THREE.MeshBasicMaterial({ color: 0xffb060 })); sign.position.set(0, H - 0.55, 0.32); door.add(sign);
+  // dos hojas de puerta ABIERTAS (giradas hacia dentro)
+  const leafGeo = new THREE.BoxGeometry(W / 2 - 0.4, H - 0.6, 0.12);
+  const leafMat = new THREE.MeshStandardMaterial({ color: 0x0e0e12, metalness: 0.5, roughness: 0.6 });
+  const leafL = new THREE.Mesh(leafGeo, leafMat); leafL.position.set(-W / 2 + 0.2, H / 2 - 0.1, 0.6); leafL.rotation.y = -1.15; door.add(leafL);
+  const leafR = new THREE.Mesh(leafGeo, leafMat); leafR.position.set(W / 2 - 0.2, H / 2 - 0.1, 0.6); leafR.rotation.y = 1.15; door.add(leafR);
+
   /* ---------- Estadio + OCTÁGONO con puerta abierta ---------- */
   const arena = new THREE.Group(); arena.position.set(0, 0, END_Z - 14); scene.add(arena);
   const standMat = new THREE.MeshStandardMaterial({ color: 0x101014, metalness: 0.2, roughness: 1 });
@@ -139,12 +155,13 @@
   // cada punto: posición + hacia dónde mira. 'hold' = pausa DESPUÉS de llegar.
   const OCT_Z = arena.position.z;
   const wp = [
-    { p: new THREE.Vector3(0, 1.7, 16),          l: new THREE.Vector3(0, 1.6, 0),         hold: 0.6 }, // 0 inicio (pausa inicial)
-    { p: new THREE.Vector3(0, 1.7, -36),         l: new THREE.Vector3(0, 1.6, -66),       hold: 0.5 }, // 1 avanzando por el túnel
-    { p: new THREE.Vector3(0, 1.7, END_Z + 8),   l: new THREE.Vector3(0, 1.6, END_Z - 10),hold: 0.7 }, // 2 boca: se asoma a la arena
-    { p: new THREE.Vector3(0, 1.6, OCT_Z + 7),   l: new THREE.Vector3(0, 1.3, OCT_Z),     hold: 0.4 }, // 3 cruza la puerta
-    { p: new THREE.Vector3(0, 1.5, OCT_Z + 0.5), l: new THREE.Vector3(0, 1.2, OCT_Z - 4), hold: 0.8 }, // 4 dentro, en el centro (pausa larga)
-    { p: new THREE.Vector3(0, 6.5, OCT_Z + 10),  l: new THREE.Vector3(0, 1.0, OCT_Z),     hold: 0.0 }  // 5 se eleva
+    { p: new THREE.Vector3(0, 1.7, 16),          l: new THREE.Vector3(0, 1.6, 0),          hold: 0.6 }, // 0 inicio del pasillo (pausa)
+    { p: new THREE.Vector3(0, 1.7, -40),         l: new THREE.Vector3(0, 1.6, -70),        hold: 0.4 }, // 1 avanzando por el pasillo
+    { p: new THREE.Vector3(0, 1.7, END_Z + 6),   l: new THREE.Vector3(0, 3.5, END_Z - 2),  hold: 0.6 }, // 2 en la puerta: empieza a mirar ARRIBA
+    { p: new THREE.Vector3(0, 7, END_Z - 4),     l: new THREE.Vector3(0, 16, END_Z - 20),  hold: 0.5 }, // 3 sube mirando hacia arriba
+    { p: new THREE.Vector3(0, 22, OCT_Z + 26),   l: new THREE.Vector3(0, 1, OCT_Z),        hold: 0.9 }, // 4 vista AÉREA: octágono + gradas (pausa larga)
+    { p: new THREE.Vector3(0, 9, OCT_Z + 14),    l: new THREE.Vector3(0, 1.2, OCT_Z),      hold: 0.6 }, // 5 enfoca el octágono y empieza a bajar
+    { p: new THREE.Vector3(0, 1.6, OCT_Z + 7),   l: new THREE.Vector3(0, 1.2, OCT_Z),      hold: 0.8 }  // 6 llega al octágono
   ];
   // Construir una línea de tiempo: alternar tramo de MOVIMIENTO (peso 1) y PAUSA (peso hold)
   const segs = []; let totalW = 0;
