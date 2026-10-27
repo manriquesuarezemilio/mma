@@ -31,13 +31,14 @@
 /* ============================================================
    TEMA "ESTADIO": coherencia con el túnel (hormigón + arena)
    ============================================================ */
-/* textura sutil de hormigón sobre el fondo oscuro */
+/* textura sutil de hormigón — SIN color de fondo opaco, para no tapar el canvas 3D.
+   El color base vive en html; el body deja ver el túnel detrás. */
+html[data-theme="dark"]{background:#0b0b0d}
 html[data-theme="dark"] body{
   background:
     radial-gradient(circle at 20% 0%, rgba(255,190,120,.05), transparent 40%),
     repeating-linear-gradient(90deg, rgba(255,255,255,.012) 0 2px, transparent 2px 4px),
-    repeating-linear-gradient(0deg, rgba(0,0,0,.14) 0 3px, transparent 3px 6px),
-    #0b0b0d;
+    repeating-linear-gradient(0deg, rgba(0,0,0,.14) 0 3px, transparent 3px 6px);
 }
 /* las secciones alternas evocan la luz de la arena (ámbar muy tenue + gris cemento) */
 html[data-theme="dark"] .section-alt{
