@@ -1,0 +1,67 @@
+/* ============================================================
+   scenes.css — Modo 100% cinemática
+   Cada sección es una ESCENA que aparece y se va con el scroll,
+   flotando sobre el fondo 3D (túnel/octágono) continuo.
+   La escena activa queda centrada y usable (buscador/comparador
+   no se van mientras la usas). Respeta reduced-motion.
+   ============================================================ */
+
+html.cine-mode[data-theme]{background:transparent}
+/* el fondo 3D se ve SIEMPRE detrás: las escenas no llevan fondo opaco */
+html.cine-mode .section,
+html.cine-mode .section-alt{
+  background:transparent !important;
+  position:relative;z-index:2;
+  min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+}
+/* anula el "muro" que antes tapaba el túnel al entrar a organizaciones */
+html.cine-mode #organizaciones{box-shadow:none !important;padding-top:6rem}
+/* en modo cinemática el viaje 3D va ligado a las escenas: el espaciador antiguo sobra */
+html.cine-mode .journey-spacer{display:none}
+
+/* velo local bajo cada escena para legibilidad sobre el 3D (no tapa el resto) */
+html.cine-mode .section > *{position:relative;z-index:1}
+html.cine-mode .section::before{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 50%, rgba(8,8,10,.78) 0%, rgba(8,8,10,.55) 45%, rgba(8,8,10,.25) 75%, transparent 100%);
+  opacity:0;transition:opacity .6s ease;
+}
+html.cine-mode .section.scene-on::before{opacity:1}
+
+/* entrada/salida de la escena: el contenido entra y se va */
+html.cine-mode .scene-wrap{opacity:0;transform:translateY(60px) scale(.98);filter:blur(6px);
+  transition:opacity .7s var(--ease-out), transform .7s var(--ease-out), filter .7s ease;will-change:transform,opacity}
+html.cine-mode .section.scene-on .scene-wrap{opacity:1;transform:none;filter:none}
+html.cine-mode .section.scene-left  .scene-wrap{transform:translateX(-60px) scale(.98)}
+html.cine-mode .section.scene-right .scene-wrap{transform:translateX(60px) scale(.98)}
+
+/* las tarjetas internas entran escalonadas cuando la escena se activa */
+html.cine-mode .section.scene-on .fighter,
+html.cine-mode .section.scene-on .p4p-card,
+html.cine-mode .section.scene-on .pod,
+html.cine-mode .section.scene-on .fight,
+html.cine-mode .section.scene-on .news,
+html.cine-mode .section.scene-on .org,
+html.cine-mode .section.scene-on .weight,
+html.cine-mode .section.scene-on .disc,
+html.cine-mode .section.scene-on .rule{animation:sceneCardIn .6s var(--ease-out) both}
+@keyframes sceneCardIn{from{opacity:0;transform:translateY(26px) scale(.96)}to{opacity:1;transform:none}}
+
+/* indicador de "sigue bajando" entre escenas */
+.scene-progress{position:fixed;right:14px;top:50%;transform:translateY(-50%);z-index:60;display:flex;flex-direction:column;gap:10px}
+.scene-progress .dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.25);transition:background .3s,transform .3s;cursor:pointer}
+.scene-progress .dot.on{background:var(--red-2);transform:scale(1.4);box-shadow:0 0 12px var(--red-glow)}
+
+@media(max-width:760px){
+  html.cine-mode .section,html.cine-mode .section-alt{min-height:auto;padding-block:5rem}
+  .scene-progress{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  html.cine-mode .scene-wrap{opacity:1 !important;transform:none !important;filter:none !important}
+  html.cine-mode .section::before{opacity:1}
+  html.cine-mode .section.scene-on .fighter,html.cine-mode .section.scene-on .org,
+  html.cine-mode .section.scene-on .p4p-card,html.cine-mode .section.scene-on .pod,
+  html.cine-mode .section.scene-on .fight,html.cine-mode .section.scene-on .news,
+  html.cine-mode .section.scene-on .weight,html.cine-mode .section.scene-on .disc,
+  html.cine-mode .section.scene-on .rule{animation:none}
+}
