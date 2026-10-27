@@ -114,5 +114,22 @@
     { "t": "Formas de ganar", "icono": "🏆", "d": "KO, TKO (parada del arbitro), sumision o decision de los jueces." },
     { "t": "Faltas", "icono": "🚫", "d": "Prohibido golpear nuca y columna, meter dedos en los ojos, morder o tirar del pelo." },
     { "t": "Golpes al suelo", "icono": "⬇️", "d": "Algunas reglas prohiben rodillazos o patadas a un rival derribado. Depende del reglamento." }
-  ]
+  ],
+  "rankings": {
+    "fuente": "UFC Meta Rankings (oct 2026). La UFC retiro el top-15 clasico; se muestra lo verificado y el resto como 'por confirmar'. Edita en data.json.",
+    "actualizado": "2026-10-27",
+    "divisiones": [
+      { "div": "Peso pesado", "sexo": "M", "campeon": "Ciryl Gane", "rank": ["Tom Aspinall","Alexander Volkov","Alex Pereira","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar"] },
+      { "div": "Peso semipesado", "sexo": "M", "campeon": "Carlos Ulberg", "rank": ["por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar"] },
+      { "div": "Peso medio", "sexo": "M", "campeon": "Sean Strickland", "rank": ["Dricus du Plessis","Khamzat Chimaev","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar"] },
+      { "div": "Peso welter", "sexo": "M", "campeon": "Islam Makhachev", "rank": ["por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar"] },
+      { "div": "Peso ligero", "sexo": "M", "campeon": "Justin Gaethje", "rank": ["Ilia Topuria","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar"] },
+      { "div": "Peso pluma", "sexo": "M", "campeon": "Alexander Volkanovski", "rank": ["Movsar Evloev","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar"] },
+      { "div": "Peso gallo", "sexo": "M", "campeon": "Petr Yan", "rank": ["Merab Dvalishvili","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar"] },
+      { "div": "Peso mosca", "sexo": "M", "campeon": "Joshua Van", "rank": ["Alexandre Pantoja","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar"] },
+      { "div": "Peso gallo (F)", "sexo": "F", "campeon": "por confirmar", "rank": ["por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar"] },
+      { "div": "Peso mosca (F)", "sexo": "F", "campeon": "por confirmar", "rank": ["Zhang Weili","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar"] },
+      { "div": "Peso paja (F)", "sexo": "F", "campeon": "por confirmar", "rank": ["por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar","por confirmar"] }
+    ]
+  }
 }

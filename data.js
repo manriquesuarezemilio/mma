@@ -35,7 +35,8 @@
       PROXIMOS: d.proximos,
       CATEGORIAS: d.categorias,
       DISCIPLINAS: d.disciplinas,
-      REGLAS: d.reglas
+      REGLAS: d.reglas,
+      RANKINGS: d.rankings || null
     };
     window.dispatchEvent(new CustomEvent("mma:data"));
   }
