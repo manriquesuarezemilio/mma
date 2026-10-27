@@ -362,6 +362,33 @@
   $("#newsSearch").addEventListener("input", e => { nQ = e.target.value.trim().toLowerCase(); renderNews(); });
   $("#newsTag").addEventListener("change", e => { nTag = e.target.value; renderNews(); });
 
+  /* ===== Rankings por división (acordeón) ===== */
+  (function () {
+    const host = $("#divList");
+    if (!host || !D.RANKINGS || !D.RANKINGS.divisiones) { if (host) host.innerHTML = `<div class="empty">Rankings no disponibles.</div>`; return; }
+    const meta = $("#rankMeta"); if (meta) meta.textContent = `· ${D.RANKINGS.fuente}`;
+    const esF = (s) => s === "F";
+    host.innerHTML = D.RANKINGS.divisiones.map((dv, idx) => {
+      const camp = dv.campeon && dv.campeon !== "por confirmar"
+        ? `<div class="rank-row champ"><span class="rank-pos">🏆</span><span class="rank-name">${esc(dv.campeon)}</span><span class="chip champ">Campeón</span></div>`
+        : `<div class="rank-row champ"><span class="rank-pos">🏆</span><span class="rank-name" style="color:var(--muted)">Campeón por confirmar</span></div>`;
+      const filas = (dv.rank || []).map((n, i) => {
+        const pc = n === "por confirmar";
+        return `<div class="rank-row"><span class="rank-pos">${i + 1}</span><span class="rank-name"${pc ? ' style="color:var(--muted)"' : ''}>${esc(n)}</span></div>`;
+      }).join("");
+      return `<div class="org" data-id="div${idx}">
+        <button class="org-head" aria-expanded="false">
+          <span class="org-badge" style="background:${esF(dv.sexo) ? "#b5179e" : "#d20a0a"}">${esF(dv.sexo) ? "F" : "M"}</span>
+          <span class="org-meta"><h3>${esc(dv.div)}</h3><span class="org-long">Campeón + 15 rankeados</span></span>
+          <span class="org-count">${(dv.rank || []).filter(x => x !== "por confirmar").length}/15 confirmados</span>
+          <span class="org-arrow">▾</span>
+        </button>
+        <div class="org-panel"><div class="org-panel-inner"><div class="rank-list">${camp}${filas}</div></div></div>
+      </div>`;
+    }).join("");
+    $$(".org-head", host).forEach(h => h.addEventListener("click", () => { const o = h.closest(".org"); const op = o.classList.toggle("open"); h.setAttribute("aria-expanded", String(op)); }));
+  })();
+
   /* ===== Secciones estáticas ===== */
   $("#weightGrid").innerHTML = D.CATEGORIAS.map(c => `<div class="weight"><span class="wsex">${esc(c.sexo)}</span><h4>${esc(c.div)}</h4><p>${esc(c.kg)}</p></div>`).join("");
   $("#discGrid").innerHTML = D.DISCIPLINAS.map(d => `<article class="disc"><div class="disc-ico">${esc(d.icono)}</div><h3>${esc(d.nombre)}</h3><p>${esc(d.desc)}</p></article>`).join("");
