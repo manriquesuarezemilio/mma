@@ -22,6 +22,9 @@
   <link rel="stylesheet" href="cine.css" />
 </head>
 <body>
+  <!-- Túnel 3D de entrada (fondo fijo, no bloquea clics) -->
+  <canvas id="tunnel" aria-hidden="true"></canvas>
+
   <!-- Barra de progreso de scroll -->
   <div class="scroll-progress" id="scrollProgress"></div>
 
@@ -44,24 +47,20 @@
     </div>
   </header>
 
-  <!-- HERO CINEMATOGRÁFICO -->
-  <section class="hero" id="inicio">
-    <div class="hero-bg" id="heroBg"></div>
-    <div class="hero-tint"></div>
-    <div class="hero-vignette"></div>
-    <div class="hero-particles" id="heroParticles"></div>
+  <!-- HERO sobre el túnel 3D -->
+  <section class="hero hero-tunnel" id="inicio">
     <div class="hero-content">
       <span class="eyebrow reveal">Plataforma de deportes de combate</span>
       <h1 class="hero-title"><span class="line">EL UNIVERSO</span><span class="line accent sweep">MMA</span></h1>
       <p class="hero-tag" id="heroType">EL COMBATE EMPIEZA AQUÍ</p>
       <div class="hero-btns reveal">
-        <a href="#buscador" class="btn btn-primary">Explorar luchadores</a>
+        <a href="#organizaciones" class="btn btn-primary">Entrar al estadio</a>
+        <a href="#buscador" class="btn btn-ghost">Explorar luchadores</a>
         <a href="#p4p" class="btn btn-ghost">Ver rankings</a>
-        <a href="#organizaciones" class="btn btn-ghost">Descubrir ligas</a>
       </div>
       <div class="hero-featured" id="heroFeatured"></div>
     </div>
-    <a href="#organizaciones" class="scroll-cue" aria-label="Desplázate hacia abajo"><span>Desliza</span><i>▾</i></a>
+    <a href="#organizaciones" class="scroll-cue" aria-label="Desplázate hacia abajo"><span>Avanza por el túnel</span><i>▾</i></a>
   </section>
 
   <!-- ORGANIZACIONES -->
@@ -197,6 +196,8 @@
   <div class="toast" id="toast" hidden></div>
   <button class="to-top" id="toTop" aria-label="Volver arriba" hidden>▲</button>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="tunnel.js"></script>
   <script src="data.js"></script>
   <script src="app.js"></script>
   <script src="cine.js"></script>

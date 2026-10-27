@@ -86,7 +86,7 @@
       if (heroTint) heroTint.style.transform = `translate(${x}px,${y}px)`;
     });
     const pc = $("#heroParticles");
-    for (let i = 0; i < 28; i++) { const p = document.createElement("span"); p.className = "p"; p.style.left = Math.random() * 100 + "%"; p.style.animationDuration = (5 + Math.random() * 7) + "s"; p.style.animationDelay = (-Math.random() * 10) + "s"; p.style.opacity = (.2 + Math.random() * .5).toFixed(2); pc.appendChild(p); }
+    if (pc) for (let i = 0; i < 28; i++) { const p = document.createElement("span"); p.className = "p"; p.style.left = Math.random() * 100 + "%"; p.style.animationDuration = (5 + Math.random() * 7) + "s"; p.style.animationDelay = (-Math.random() * 10) + "s"; p.style.opacity = (.2 + Math.random() * .5).toFixed(2); pc.appendChild(p); }
     const phrases = ["EL COMBATE EMPIEZA AQUÍ", "OCHO LIGAS. UN SOLO SUEÑO.", "DE LA JAULA AL LEGADO."];
     const type = $("#heroType"); let pi = 0, ci = 0, del = false;
     (function tw() { const w = phrases[pi]; type.textContent = del ? w.slice(0, ci--) : w.slice(0, ci++); if (!del && ci > w.length) { del = true; setTimeout(tw, 1600); return; } if (del && ci < 0) { del = false; pi = (pi + 1) % phrases.length; ci = 0; } setTimeout(tw, del ? 35 : 70); })();

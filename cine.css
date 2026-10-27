@@ -13,6 +13,18 @@
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1); /* movimiento en pantalla */
 }
 
+/* ---------- Túnel 3D de fondo ---------- */
+#tunnel{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;display:block;pointer-events:none;background:#060606}
+/* el hero es transparente para ver el túnel detrás */
+.hero-tunnel{background:transparent !important;position:relative;z-index:2}
+.hero-tunnel .hero-content{background:transparent}
+/* legibilidad del texto sobre el túnel */
+.hero-tunnel .hero-title,.hero-tunnel .hero-tag{text-shadow:0 4px 30px rgba(0,0,0,.85)}
+/* a partir del contenido real, fondo OPACO que cubre el túnel (sensación de "salir") */
+#organizaciones{position:relative;z-index:2;background:var(--bg);box-shadow:0 -60px 120px 40px var(--bg)}
+.footer,.section,.modal{position:relative;z-index:2}
+.nav,.scroll-progress,.to-top,.toast{z-index:80}
+
 /* botones: feedback de pulsación corto y curva fuerte */
 .btn, .btn-mini, .btn-profile, .theme-btn, .fav-star{transition:transform .12s var(--ease-out), box-shadow .2s var(--ease-out), background .2s var(--ease-out), border-color .2s var(--ease-out), color .2s var(--ease-out)}
 
