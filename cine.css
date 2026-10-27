@@ -68,6 +68,15 @@ html[data-theme="dark"] .section-head h2::after{background:linear-gradient(90deg
 /* botón primario con leve calidez al hacer hover (luz de arena) */
 .btn-primary:hover{box-shadow:0 14px 40px var(--red-glow),0 0 30px rgba(255,194,75,.25)}
 
+/* ---------- Capas de texto cinemáticas sobre el viaje ---------- */
+.journey-spacer{height:260vh;position:relative;z-index:1}      /* recorrido de scroll para el viaje 3D */
+.story{position:fixed;inset:0;z-index:3;pointer-events:none;display:grid;place-items:center}
+.story-line{position:absolute;text-align:center;opacity:0;transform:translateY(30px) scale(.98);transition:opacity .5s var(--ease-out),transform .5s var(--ease-out);padding:1.5rem;max-width:900px}
+.story-line.on{opacity:1;transform:none}
+.story-line h2{font-family:"Oswald";text-transform:uppercase;font-size:clamp(2.2rem,8vw,5.5rem);line-height:.95;text-shadow:0 6px 40px rgba(0,0,0,.85)}
+.story-line p{color:#d7d2cc;font-size:clamp(1rem,2.6vw,1.5rem);margin-top:.8rem;text-shadow:0 2px 20px rgba(0,0,0,.8)}
+@media(prefers-reduced-motion:reduce){ .journey-spacer{height:0} .story{display:none} }
+
 /* botones: feedback de pulsación corto y curva fuerte */
 .btn, .btn-mini, .btn-profile, .theme-btn, .fav-star{transition:transform .12s var(--ease-out), box-shadow .2s var(--ease-out), background .2s var(--ease-out), border-color .2s var(--ease-out), color .2s var(--ease-out)}
 
