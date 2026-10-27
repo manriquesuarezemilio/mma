@@ -19,6 +19,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="cine.css" />
 </head>
 <body>
   <!-- Barra de progreso de scroll -->
@@ -45,12 +46,13 @@
 
   <!-- HERO CINEMATOGRÁFICO -->
   <section class="hero" id="inicio">
-    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-bg" id="heroBg" data-parallax="0.12"></div>
+    <div class="octagon oct-zoom" aria-hidden="true"></div>
     <div class="hero-vignette"></div>
     <div class="hero-particles" id="heroParticles"></div>
     <div class="hero-content">
       <span class="eyebrow reveal">Plataforma de deportes de combate</span>
-      <h1 class="hero-title"><span class="line">EL UNIVERSO</span><span class="line accent">MMA</span></h1>
+      <h1 class="hero-title"><span class="line">EL UNIVERSO</span><span class="line accent sweep">MMA</span></h1>
       <p class="hero-tag" id="heroType">EL COMBATE EMPIEZA AQUÍ</p>
       <div class="hero-btns reveal">
         <a href="#buscador" class="btn btn-primary">Explorar luchadores</a>
@@ -62,9 +64,22 @@
     <a href="#organizaciones" class="scroll-cue" aria-label="Desplázate hacia abajo"><span>Desliza</span><i>▾</i></a>
   </section>
 
+  <!-- ESCENA 1: EL COMBATE -->
+  <section class="scene scene-tall cine-link" aria-label="Introducción">
+    <div class="scene-sticky">
+      <div class="scene-bg" data-parallax="0.18" style="background:radial-gradient(circle at 50% 40%,rgba(225,10,23,.22),transparent 55%),linear-gradient(180deg,#0b0b0f,#09090b)"></div>
+      <div class="octagon oct-zoom" aria-hidden="true"></div>
+      <div class="scene-dark"></div>
+      <div class="scene-inner">
+        <h2 data-cine="zoom">Dos luchadores.<br><span class="sweep">Un objetivo.</span></h2>
+        <p data-cine data-delay="1">La cámara se acerca al octágono. Baja para empezar.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- ORGANIZACIONES -->
   <section class="section" id="organizaciones">
-    <div class="section-head reveal">
+    <div class="section-head reveal" data-cine>
       <span class="kicker">Explora</span>
       <h2>El mundo del MMA</h2>
       <p class="section-desc">Pulsa una liga para desplegar sus luchadores. Puedes abrir varias a la vez.</p>
@@ -81,7 +96,7 @@
 
   <!-- BUSCADOR AVANZADO -->
   <section class="section section-alt" id="buscador">
-    <div class="section-head reveal">
+    <div class="section-head reveal" data-cine>
       <span class="kicker">Modo exploración</span>
       <h2>Busca a tu luchador</h2>
       <p class="section-desc">Filtra en tiempo real por nombre, liga, peso, país y sexo.</p>
@@ -101,7 +116,7 @@
 
   <!-- P4P PODIO -->
   <section class="section" id="p4p">
-    <div class="section-head reveal">
+    <div class="section-head reveal" data-cine>
       <span class="kicker">Lo mejor de lo mejor</span>
       <h2>Ranking Pound for Pound</h2>
       <p class="section-desc">Los mejores libra por libra. <strong class="warn">Clasificación editorial propia, no oficial.</strong> <span id="p4pMeta" class="meta-note"></span></p>
@@ -113,9 +128,26 @@
     <div class="p4p-rest" id="p4pRest"></div>
   </section>
 
+  <!-- ESCENA: CARA A CARA (efecto visual) -->
+  <section class="scene scene-tall cine-link" aria-label="Cara a cara">
+    <div class="scene-sticky">
+      <div class="scene-bg" data-parallax="0.15" style="background:radial-gradient(circle at 50% 50%,rgba(225,10,23,.2),transparent 60%),#0a0a0c"></div>
+      <div class="scene-dark"></div>
+      <div class="faceoff" aria-hidden="true">
+        <div class="fo left"><img src="img/alex-pereira.jpg" alt="" loading="lazy" onerror="this.style.display='none'"></div>
+        <div class="fo right"><img src="img/ilia-topuria.jpg" alt="" loading="lazy" onerror="this.style.display='none'"></div>
+        <div class="vs">VS</div>
+      </div>
+      <div class="scene-inner" style="align-self:end;padding-bottom:12vh">
+        <h2 data-cine>El <span class="sweep">cara a cara</span></h2>
+        <p data-cine data-delay="1">Debajo puedes comparar a dos luchadores de verdad.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- COMPARADOR -->
   <section class="section section-alt" id="comparar">
-    <div class="section-head reveal">
+    <div class="section-head reveal" data-cine>
       <span class="kicker">Cara a cara</span>
       <h2>Fighter vs Fighter</h2>
       <p class="section-desc">Elige dos luchadores y míralos enfrentados. Solo comparamos datos verificables.</p>
@@ -131,7 +163,7 @@
 
   <!-- COMBATES -->
   <section class="section" id="combates">
-    <div class="section-head reveal">
+    <div class="section-head reveal" data-cine>
       <span class="kicker">Agenda</span>
       <h2>Próximos combates</h2>
       <p class="section-desc"><strong class="warn">Demostración:</strong> no son enfrentamientos confirmados. Sin fuente en directo conectada.</p>
@@ -146,7 +178,7 @@
 
   <!-- NOTICIAS -->
   <section class="section section-alt" id="noticias">
-    <div class="section-head reveal">
+    <div class="section-head reveal" data-cine>
       <span class="kicker">Actualidad</span>
       <h2>Noticias</h2>
       <p class="section-desc"><strong class="warn">Demostración:</strong> contenido de ejemplo, sin fuente de noticias conectada.</p>
@@ -161,20 +193,37 @@
 
   <!-- CATEGORÍAS -->
   <section class="section" id="categorias">
-    <div class="section-head reveal"><span class="kicker">Divisiones</span><h2>Categorías de peso</h2><p class="section-desc">Referencia general; los límites varían por organización.</p></div>
+    <div class="section-head reveal" data-cine><span class="kicker">Divisiones</span><h2>Categorías de peso</h2><p class="section-desc">Referencia general; los límites varían por organización.</p></div>
     <div class="weight-grid" id="weightGrid"></div>
   </section>
 
   <!-- DISCIPLINAS -->
   <section class="section section-alt" id="disciplinas">
-    <div class="section-head reveal"><span class="kicker">Las bases</span><h2>Disciplinas</h2><p class="section-desc">Lo que se combina dentro del octágono.</p></div>
+    <div class="section-head reveal" data-cine><span class="kicker">Las bases</span><h2>Disciplinas</h2><p class="section-desc">Lo que se combina dentro del octágono.</p></div>
     <div class="disc-grid" id="discGrid"></div>
   </section>
 
   <!-- REGLAS -->
   <section class="section" id="reglas">
-    <div class="section-head reveal"><span class="kicker">Cómo funciona</span><h2>Reglas del MMA</h2><p class="section-desc">La duración y las reglas varían según la competición.</p></div>
+    <div class="section-head reveal" data-cine><span class="kicker">Cómo funciona</span><h2>Reglas del MMA</h2><p class="section-desc">La duración y las reglas varían según la competición.</p></div>
     <div class="rules-grid" id="rulesGrid"></div>
+  </section>
+
+  <!-- ESCENA FINAL -->
+  <section class="scene scene-tall ending cine-link" aria-label="Final">
+    <div class="scene-sticky">
+      <div class="scene-bg" data-parallax="0.1" style="background:radial-gradient(circle at 50% 55%,rgba(225,10,23,.28),transparent 55%),#09090b"></div>
+      <div class="octagon oct-zoom" aria-hidden="true"></div>
+      <div class="scene-dark"></div>
+      <div class="scene-inner">
+        <h2 data-cine="zoom">El combate <span class="sweep">nunca termina</span></h2>
+        <p data-cine data-delay="1">Sigue explorando el universo del MMA.</p>
+        <div class="btns" data-cine data-delay="2">
+          <a href="#organizaciones" class="btn btn-primary">Explorar ligas</a>
+          <a href="#buscador" class="btn btn-ghost">Buscar luchadores</a>
+        </div>
+      </div>
+    </div>
   </section>
 
   <footer class="footer">
@@ -196,5 +245,6 @@
 
   <script src="data.js"></script>
   <script src="app.js"></script>
+  <script src="cine.js"></script>
 </body>
 </html>
