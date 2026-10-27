@@ -31,15 +31,31 @@
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: "high-performance" });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   renderer.setSize(innerWidth, innerHeight);
+  // Tone mapping + color correcto: evita el aspecto "tosco"/quemado
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.05;
+  if ("outputEncoding" in renderer && THREE.sRGBEncoding) renderer.outputEncoding = THREE.sRGBEncoding;
 
   const TUNNEL_LEN = 120, END_Z = -TUNNEL_LEN, W = 7.5, H = 5.6;
 
+  /* ---------- Textura procedural de hormigón (ruido) ---------- */
+  function concreteTexture(base) {
+    const s = 256, c = document.createElement("canvas"); c.width = c.height = s; const g = c.getContext("2d");
+    g.fillStyle = base; g.fillRect(0, 0, s, s);
+    for (let i = 0; i < 9000; i++) { const x = Math.random() * s, y = Math.random() * s, r = Math.random() * 1.6; const v = (Math.random() - 0.5) * 36; g.fillStyle = `rgba(${128 + v|0},${128 + v|0},${132 + v|0},0.05)`; g.beginPath(); g.arc(x, y, r, 0, 7); g.fill(); }
+    // juntas/paneles
+    g.strokeStyle = "rgba(0,0,0,0.25)"; g.lineWidth = 2;
+    for (let y = 0; y <= s; y += 64) { g.beginPath(); g.moveTo(0, y); g.lineTo(s, y); g.stroke(); }
+    const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(2, 10); return t;
+  }
+
   /* ---------- Materiales ---------- */
-  const concrete = new THREE.MeshStandardMaterial({ color: 0x3a3a3e, metalness: 0.06, roughness: 0.95 });
-  const concreteDark = new THREE.MeshStandardMaterial({ color: 0x222226, metalness: 0.06, roughness: 1 });
-  const floorMat = new THREE.MeshStandardMaterial({ color: 0x2c2c30, metalness: 0.25, roughness: 0.45 }); // algo de reflejo (suelo "mojado")
-  const steel = new THREE.MeshStandardMaterial({ color: 0x1b1b20, metalness: 0.6, roughness: 0.5 });
-  const lampMat = new THREE.MeshBasicMaterial({ color: 0xdfe6ff });
+  const concreteMap = concreteTexture("#3a3a3e");
+  const concrete = new THREE.MeshStandardMaterial({ color: 0x4a4a50, map: concreteMap, metalness: 0.05, roughness: 0.92 });
+  const concreteDark = new THREE.MeshStandardMaterial({ color: 0x2a2a2f, map: concreteTexture("#26262b"), metalness: 0.05, roughness: 1 });
+  const floorMat = new THREE.MeshStandardMaterial({ color: 0x34343a, map: concreteTexture("#30303a"), metalness: 0.35, roughness: 0.4 });
+  const steel = new THREE.MeshStandardMaterial({ color: 0x24242b, metalness: 0.8, roughness: 0.35 });
+  const lampMat = new THREE.MeshBasicMaterial({ color: 0xeef2ff });
 
   function plane(w, l, mat, rot, pos) { const m = new THREE.Mesh(new THREE.PlaneGeometry(w, l), mat); if (rot.x) m.rotation.x = rot.x; if (rot.y) m.rotation.y = rot.y; m.position.set(pos.x, pos.y, pos.z); scene.add(m); return m; }
   plane(W, TUNNEL_LEN + 40, floorMat, { x: -Math.PI / 2 }, { x: 0, y: 0, z: -TUNNEL_LEN / 2 });
@@ -104,7 +120,8 @@
   const redArena = new THREE.PointLight(0xe10a17, 2.6, 80); redArena.position.set(0, 11, 0); arena.add(redArena);
   const whiteArena = new THREE.SpotLight(0xffffff, 2.6, 90, Math.PI / 6, 0.5); whiteArena.position.set(0, 26, 6); whiteArena.target = plat; arena.add(whiteArena);
 
-  scene.add(new THREE.AmbientLight(0x1a1c22, 0.9));
+  scene.add(new THREE.AmbientLight(0x1a1c22, 0.7));
+  scene.add(new THREE.HemisphereLight(0x8899bb, 0x120a0c, 0.55)); // cielo frío / suelo cálido: relieve suave
 
   /* ---------- Humo por capas ---------- */
   const smokeTex = (function () { const c = document.createElement("canvas"); c.width = c.height = 64; const g = c.getContext("2d"); const grd = g.createRadialGradient(32, 32, 2, 32, 32, 32); grd.addColorStop(0, "rgba(255,255,255,.5)"); grd.addColorStop(1, "rgba(255,255,255,0)"); g.fillStyle = grd; g.fillRect(0, 0, 64, 64); return new THREE.CanvasTexture(c); })();
@@ -119,24 +136,44 @@
   scene.add(sparks);
 
   /* ---------- Cámara por WAYPOINTS (túnel -> puerta -> centro del octágono) ---------- */
-  // cada punto: posición + hacia dónde mira
-  const OCT_Z = arena.position.z; // z del centro del octágono
+  // cada punto: posición + hacia dónde mira. 'hold' = pausa DESPUÉS de llegar.
+  const OCT_Z = arena.position.z;
   const wp = [
-    { p: new THREE.Vector3(0, 1.7, 16),         l: new THREE.Vector3(0, 1.6, 0) },     // 0 inicio túnel
-    { p: new THREE.Vector3(0, 1.7, -40),        l: new THREE.Vector3(0, 1.6, -70) },   // 1 avanzando
-    { p: new THREE.Vector3(0, 1.7, END_Z + 6),  l: new THREE.Vector3(0, 1.6, END_Z - 10) }, // 2 boca del túnel
-    { p: new THREE.Vector3(0, 1.6, OCT_Z + 7),  l: new THREE.Vector3(0, 1.3, OCT_Z) },  // 3 cruzando la puerta de la jaula
-    { p: new THREE.Vector3(0, 1.5, OCT_Z + 0.5),l: new THREE.Vector3(0, 1.2, OCT_Z - 4) }, // 4 dentro, en el centro
-    { p: new THREE.Vector3(0, 6.5, OCT_Z + 9),  l: new THREE.Vector3(0, 1.0, OCT_Z) }   // 5 se eleva: vista del octágono
+    { p: new THREE.Vector3(0, 1.7, 16),          l: new THREE.Vector3(0, 1.6, 0),         hold: 0.6 }, // 0 inicio (pausa inicial)
+    { p: new THREE.Vector3(0, 1.7, -36),         l: new THREE.Vector3(0, 1.6, -66),       hold: 0.5 }, // 1 avanzando por el túnel
+    { p: new THREE.Vector3(0, 1.7, END_Z + 8),   l: new THREE.Vector3(0, 1.6, END_Z - 10),hold: 0.7 }, // 2 boca: se asoma a la arena
+    { p: new THREE.Vector3(0, 1.6, OCT_Z + 7),   l: new THREE.Vector3(0, 1.3, OCT_Z),     hold: 0.4 }, // 3 cruza la puerta
+    { p: new THREE.Vector3(0, 1.5, OCT_Z + 0.5), l: new THREE.Vector3(0, 1.2, OCT_Z - 4), hold: 0.8 }, // 4 dentro, en el centro (pausa larga)
+    { p: new THREE.Vector3(0, 6.5, OCT_Z + 10),  l: new THREE.Vector3(0, 1.0, OCT_Z),     hold: 0.0 }  // 5 se eleva
   ];
+  // Construir una línea de tiempo: alternar tramo de MOVIMIENTO (peso 1) y PAUSA (peso hold)
+  const segs = []; let totalW = 0;
+  for (let i = 0; i < wp.length; i++) {
+    if (i < wp.length - 1) { segs.push({ type: "move", a: i, b: i + 1, w: 1 }); totalW += 1; }
+    if (wp[i].hold > 0) { segs.push({ type: "hold", a: i, w: wp[i].hold }); totalW += wp[i].hold; }
+  }
   const curPos = wp[0].p.clone(), curLook = wp[0].l.clone(), tgtPos = new THREE.Vector3(), tgtLook = new THREE.Vector3();
 
-  function progress() { const span = innerHeight * 3.2; return Math.max(0, Math.min(1, scrollY / span)); }
+  function progress() { const span = innerHeight * 6.0; return Math.max(0, Math.min(1, scrollY / span)); } // viaje más largo
   function sample(t) {
-    const n = wp.length - 1, f = Math.max(0, Math.min(n, t * n)), i = Math.floor(f), k = f - i;
-    const a = wp[Math.min(i, n)], b = wp[Math.min(i + 1, n)];
-    tgtPos.lerpVectors(a.p, b.p, k); tgtLook.lerpVectors(a.l, b.l, k);
-    return i;
+    // posición a lo largo de la línea de tiempo ponderada (incluye pausas)
+    let acc = 0, target = t * totalW;
+    for (let s = 0; s < segs.length; s++) {
+      const seg = segs[s];
+      if (target <= acc + seg.w || s === segs.length - 1) {
+        const k = seg.w ? Math.max(0, Math.min(1, (target - acc) / seg.w)) : 0;
+        if (seg.type === "hold") {            // PAUSA: la cámara se queda en el waypoint a
+          tgtPos.copy(wp[seg.a].p); tgtLook.copy(wp[seg.a].l); return seg.a;
+        } else {                               // MOVIMIENTO entre a y b
+          const ke = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2; // ease-in-out suave
+          tgtPos.lerpVectors(wp[seg.a].p, wp[seg.b].p, ke);
+          tgtLook.lerpVectors(wp[seg.a].l, wp[seg.b].l, ke);
+          return seg.a;
+        }
+      }
+      acc += seg.w;
+    }
+    tgtPos.copy(wp[wp.length - 1].p); tgtLook.copy(wp[wp.length - 1].l); return wp.length - 1;
   }
 
   window.addEventListener("resize", () => { camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); }, { passive: true });
