@@ -109,7 +109,7 @@
   function statusChip(l) { return l.status ? `<span class="chip champ">${esc(l.status)}</span>` : `<span class="chip" title="No verificado">estatus sin verificar</span>`; }
   function card(l) {
     const k = key(l), rec = l.record ? esc(l.record) : "sin verificar";
-    return `<article class="fighter tilt" data-key="${esc(k)}">
+    return `<article class="fighter" data-key="${esc(k)}">
       <button class="fav-star ${isFav(k) ? "on" : ""}" data-fav="${esc(k)}" aria-label="Favorito">★</button>
       ${avaBox(l, "fighter-photo")}<span class="fighter-flag" style="position:absolute;top:8px;left:8px">${esc(l.bandera || "")}</span>
       <div class="fighter-body">
@@ -124,17 +124,9 @@
   function bindCards(root) {
     $$(".btn-profile", root).forEach(b => b.addEventListener("click", () => { const l = TODOS.find(x => key(x) === b.dataset.key); if (l) openProfile(l); }));
     $$(".fav-star", root).forEach(b => b.addEventListener("click", (e) => { e.stopPropagation(); toggleFav(b.dataset.fav); }));
-    if (!reduce) bindTilt(root);
-  }
-  /* efecto 3D tilt */
-  function bindTilt(root) {
-    $$(".tilt", root).forEach(el => {
-      el.addEventListener("mousemove", (e) => {
-        const r = el.getBoundingClientRect(), px = (e.clientX - r.left) / r.width - .5, py = (e.clientY - r.top) / r.height - .5;
-        el.style.transform = `perspective(700px) rotateY(${px * 6}deg) rotateX(${-py * 6}deg) translateY(-6px)`;
-      });
-      el.addEventListener("mouseleave", () => { el.style.transform = ""; });
-    });
+    // Nota: sin tilt 3D en tarjetas de luchador. La skill "animate" desaconseja
+    // mover por estilo contenido que el usuario lee. El hover de elevacion
+    // (CSS .fighter:hover, gateado por hover) ya aporta feedback suficiente.
   }
 
   /* ===== Organizaciones (acordeón) ===== */
@@ -379,3 +371,4 @@
   renderOrgs([]); renderSearch(); renderP4P("pos"); renderVs(); renderFights(); renderNews(); fromHash();
   } // boot
 })();
+
