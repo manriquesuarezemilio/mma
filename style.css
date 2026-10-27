@@ -45,9 +45,10 @@ h1,h2,h3,.logo{font-family:"Oswald","Inter",sans-serif;letter-spacing:.5px}
 .hero-bg{position:absolute;inset:-8%;z-index:0;background:
   radial-gradient(circle at 30% 30%,rgba(225,10,23,.35),transparent 45%),
   radial-gradient(circle at 72% 65%,rgba(120,10,20,.4),transparent 50%),
-  conic-gradient(from 210deg at 50% 50%,#17171d,#0b0b0f,#17171d),
+  linear-gradient(180deg,rgba(9,9,11,.55),rgba(9,9,11,.8)),
+  url("img/hero-arena.jpg") center/cover no-repeat,
   #0b0b0f;
-  filter:saturate(1.1);transition:transform .15s ease-out;will-change:transform}
+  filter:saturate(1.05);transition:transform .15s ease-out;will-change:transform}
 .hero-vignette{position:absolute;inset:0;z-index:1;pointer-events:none;background:
   repeating-linear-gradient(115deg,transparent 0 44px,rgba(255,255,255,.015) 44px 45px),
   radial-gradient(circle at 50% 42%,transparent 40%,rgba(0,0,0,.72) 100%)}
