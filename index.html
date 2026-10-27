@@ -3,71 +3,155 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MMA — Artes Marciales Mixtas</title>
+  <meta name="description" content="El Universo MMA: organizaciones, luchadores, ranking P4P, combates, noticias, disciplinas y reglas." />
+  <title>EL UNIVERSO MMA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="hero">
-    <nav class="nav">
-      <span class="logo">MMA</span>
-      <ul>
-        <li><a href="#que-es">Qué es</a></li>
-        <li><a href="#disciplinas">Disciplinas</a></li>
-        <li><a href="#reglas">Reglas</a></li>
-      </ul>
-    </nav>
-    <div class="hero-text">
-      <h1>Artes Marciales Mixtas</h1>
-      <p>El deporte de combate que une boxeo, lucha y jiu-jitsu.</p>
-      <a class="btn" href="#que-es">Saber más</a>
+  <!-- NAV -->
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#inicio" class="logo"><span class="logo-mark">●</span> UNIVERSO<strong>MMA</strong></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav-links" id="navLinks" aria-label="Navegación principal">
+        <a href="#inicio">Inicio</a>
+        <a href="#organizaciones">Organizaciones</a>
+        <a href="#luchadores">Luchadores</a>
+        <a href="#p4p">Ranking P4P</a>
+        <a href="#combates">Próximos</a>
+        <a href="#noticias">Noticias</a>
+        <a href="#disciplinas">Disciplinas</a>
+        <a href="#reglas">Reglas</a>
+      </nav>
     </div>
   </header>
 
-  <main>
-    <section id="que-es" class="section">
-      <h2>Qué es el MMA</h2>
-      <p>
-        El MMA es un deporte de contacto. Dos luchadores pelean en una jaula
-        llamada octágono. Se pueden usar golpes de pie y lucha en el suelo.
-        Gana quien derriba, somete o convence a los jueces.
-      </p>
-    </section>
-
-    <section id="disciplinas" class="section alt">
-      <h2>Disciplinas</h2>
-      <div class="cards">
-        <article class="card">
-          <h3>Boxeo</h3>
-          <p>Golpes con los puños. Pies rápidos y buena guardia.</p>
-        </article>
-        <article class="card">
-          <h3>Muay Thai</h3>
-          <p>Golpes con puños, codos, rodillas y piernas.</p>
-        </article>
-        <article class="card">
-          <h3>Lucha</h3>
-          <p>Derribar al rival y controlarlo en el suelo.</p>
-        </article>
-        <article class="card">
-          <h3>Jiu-Jitsu</h3>
-          <p>Llaves y estrangulaciones para hacer rendir al rival.</p>
-        </article>
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="hero-overlay"></div>
+    <div class="hero-content reveal">
+      <span class="eyebrow">Deporte de combate · Nº1 mundial</span>
+      <h1>EL UNIVERSO <span class="accent">MMA</span></h1>
+      <p class="hero-sub">Los mejores luchadores. Las mayores organizaciones. Una sola pasión.</p>
+      <div class="hero-btns">
+        <a href="#luchadores" class="btn btn-primary">Explorar luchadores</a>
+        <a href="#organizaciones" class="btn btn-ghost">Descubrir organizaciones</a>
       </div>
-    </section>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num" data-count="8">0</span><span class="stat-label">Organizaciones</span></div>
+        <div class="stat"><span class="stat-num" data-count="9">0</span><span class="stat-label">Categorías de peso</span></div>
+        <div class="stat"><span class="stat-num" data-count="4">0</span><span class="stat-label">Disciplinas base</span></div>
+      </div>
+      <div class="hero-tags">
+        <span class="tag">UFC</span><span class="tag">PFL</span><span class="tag">ONE</span>
+        <span class="tag">RIZIN</span><span class="tag">OKTAGON</span><span class="tag">KSW</span>
+      </div>
+    </div>
+    <a href="#organizaciones" class="scroll-cue" aria-label="Bajar">▾</a>
+  </section>
 
-    <section id="reglas" class="section">
-      <h2>Reglas básicas</h2>
-      <ul class="reglas">
-        <li>Los combates tienen asaltos de 5 minutos.</li>
-        <li>Se gana por KO, sumisión o decisión de los jueces.</li>
-        <li>No se puede golpear la nuca ni los ojos.</li>
-        <li>No se muerde ni se tira del pelo.</li>
-      </ul>
-    </section>
-  </main>
+  <!-- ORGANIZACIONES -->
+  <section class="section" id="organizaciones">
+    <div class="section-head reveal">
+      <h2>Organizaciones del MMA</h2>
+      <p class="section-desc">Pulsa una organización para desplegar sus luchadores. Puedes abrir varias a la vez.</p>
+    </div>
+    <div class="filters reveal" id="orgFilters">
+      <input type="search" id="searchFighter" class="search" placeholder="🔎 Buscar luchador por nombre…" aria-label="Buscar luchador" />
+      <select id="filterPeso" class="select" aria-label="Filtrar por categoría de peso"><option value="">Todas las categorías</option></select>
+      <select id="filterSexo" class="select" aria-label="Filtrar por sexo">
+        <option value="">Ambos sexos</option><option value="M">Masculino</option><option value="F">Femenino</option>
+      </select>
+    </div>
+    <div class="org-list" id="orgList"><!-- JS --></div>
+  </section>
+
+  <!-- LUCHADORES destacados (ancla de navegación: apunta a organizaciones) -->
+  <span id="luchadores" class="anchor"></span>
+
+  <!-- P4P -->
+  <section class="section section-alt" id="p4p">
+    <div class="section-head reveal">
+      <h2>Pound for Pound</h2>
+      <p class="section-desc">Los mejores libra por libra, sin importar el peso. <strong class="warn">Clasificación editorial propia, no oficial.</strong></p>
+    </div>
+    <div class="filters reveal">
+      <select id="p4pSort" class="select" aria-label="Ordenar ranking">
+        <option value="pos">Ordenar: posición</option>
+        <option value="nombre">Ordenar: nombre</option>
+      </select>
+      <span class="meta-note" id="p4pMeta"></span>
+    </div>
+    <div class="p4p-grid" id="p4pGrid"></div>
+  </section>
+
+  <!-- PRÓXIMOS COMBATES -->
+  <section class="section" id="combates">
+    <div class="section-head reveal">
+      <h2>Próximos combates</h2>
+      <p class="section-desc">Contenido de demostración. No son enfrentamientos confirmados.</p>
+    </div>
+    <div class="fight-grid" id="fightGrid"></div>
+  </section>
+
+  <!-- NOTICIAS -->
+  <section class="section section-alt" id="noticias">
+    <div class="section-head reveal">
+      <h2>Últimas noticias</h2>
+      <p class="section-desc"><strong class="warn">Demostración:</strong> no hay fuente de noticias conectada.</p>
+    </div>
+    <div class="news-grid" id="newsGrid"></div>
+  </section>
+
+  <!-- CATEGORÍAS DE PESO -->
+  <section class="section" id="categorias">
+    <div class="section-head reveal">
+      <h2>Categorías de peso</h2>
+      <p class="section-desc">Referencia general. Los límites y divisiones pueden variar según la organización.</p>
+    </div>
+    <div class="weight-grid" id="weightGrid"></div>
+  </section>
+
+  <!-- DISCIPLINAS -->
+  <section class="section section-alt" id="disciplinas">
+    <div class="section-head reveal">
+      <h2>Disciplinas</h2>
+      <p class="section-desc">Las bases que se combinan en el MMA.</p>
+    </div>
+    <div class="disc-grid" id="discGrid"></div>
+  </section>
+
+  <!-- REGLAS -->
+  <section class="section" id="reglas">
+    <div class="section-head reveal">
+      <h2>Reglas del MMA</h2>
+      <p class="section-desc">La duración y las reglas pueden variar según la competición.</p>
+    </div>
+    <div class="rules-grid" id="rulesGrid"></div>
+  </section>
 
   <footer class="footer">
-    <p>Hecho con cariño · MMA</p>
+    <p><strong>EL UNIVERSO MMA</strong> · Web de aficionado con fines informativos.</p>
+    <p class="muted" id="footMeta"></p>
   </footer>
+
+  <!-- MODAL perfil -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalName" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-card">
+      <button class="modal-close" data-close aria-label="Cerrar">✕</button>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <button class="to-top" id="toTop" aria-label="Volver arriba" hidden>▲</button>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
