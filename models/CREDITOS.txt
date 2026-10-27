@@ -1,0 +1,4 @@
+Modelos 3D CC0 (dominio publico) de KhronosGroup/glTF-Sample-Models:
+- fighter-a.glb = CesiumMan (CC0)
+- fighter-b.glb = BrainStem (CC0)
+Uso libre, sin atribucion obligatoria.

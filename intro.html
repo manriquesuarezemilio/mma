@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EL UNIVERSO MMA · Intro</title>
+  <meta name="description" content="Intro cinematográfica del Universo MMA." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a0a0c'/%3E%3Ctext x='50' y='72' font-size='64' text-anchor='middle' fill='%23e10a17' font-family='Arial Black,Arial' font-weight='900'%3EM%3C/text%3E%3C/svg%3E" />
+  <style>
+    :root{ --red:#e10a17; --red2:#ff2b38; --glow:rgba(225,10,23,.5); }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;background:#09090b;color:#f5f5f7;font-family:"Oswald","Inter",system-ui,sans-serif;overflow-x:hidden}
+    /* lienzo WebGL fijo de fondo */
+    #gl{position:fixed;inset:0;z-index:0;display:block}
+    /* barra de progreso */
+    #prog{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--red),var(--red2));z-index:40;box-shadow:0 0 10px var(--glow)}
+    /* saltar intro */
+    .skip{position:fixed;top:1rem;right:1rem;z-index:40;background:rgba(0,0,0,.4);border:1px solid #2a2a34;color:#f5f5f7;padding:.5rem 1rem;border-radius:999px;text-decoration:none;font-size:.85rem;font-family:Inter,sans-serif;backdrop-filter:blur(6px)}
+    .skip:hover{border-color:var(--red2)}
+    /* capas de texto por escena, encima del WebGL */
+    .layers{position:relative;z-index:10}
+    .scene{height:100vh;display:grid;place-items:center;text-align:center;padding:1.5rem}
+    .scene .box{max-width:900px;opacity:0;transform:translateY(40px)}
+    .scene h1{font-size:clamp(2.6rem,10vw,7rem);text-transform:uppercase;line-height:.9;letter-spacing:1px;text-shadow:0 6px 40px rgba(0,0,0,.7)}
+    .scene h2{font-size:clamp(1.8rem,6vw,4rem);text-transform:uppercase;line-height:.95}
+    .scene p{color:#b7b7c0;font-size:clamp(1rem,2.6vw,1.5rem);margin-top:1rem;font-family:Inter,sans-serif}
+    .accent{color:var(--red2)}
+    .enter{display:inline-block;margin-top:2rem;background:var(--red);color:#fff;padding:1rem 2.2rem;border-radius:999px;text-decoration:none;font-weight:700;text-transform:uppercase;letter-spacing:1px;font-family:Inter,sans-serif;box-shadow:0 8px 26px var(--glow)}
+    .cue{position:fixed;bottom:1.4rem;left:50%;transform:translateX(-50%);z-index:20;color:#b7b7c0;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;font-family:Inter,sans-serif}
+    .cue i{display:block;font-style:normal;font-size:1.3rem;animation:bob 1.6s infinite}
+    @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+    /* loader */
+    #load{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:#09090b;transition:opacity .6s ease}
+    #load.gone{opacity:0;pointer-events:none}
+    #load .mark{font-size:2rem;color:var(--red2);letter-spacing:4px}
+    @media(prefers-reduced-motion:reduce){ .cue i{animation:none} }
+  </style>
+</head>
+<body>
+  <div id="load"><div class="mark">MMA</div></div>
+  <div id="prog"></div>
+  <a class="skip" href="index.html">Saltar intro ✕</a>
+  <canvas id="gl"></canvas>
+
+  <div class="layers">
+    <section class="scene"><div class="box"><h1>EL UNIVERSO <span class="accent">MMA</span></h1><p>El combate empieza aquí.</p></div></section>
+    <section class="scene"><div class="box"><h2>Dos luchadores.<br><span class="accent">Un objetivo.</span></h2><p>La cámara entra al octágono.</p></div></section>
+    <section class="scene"><div class="box"><h2>Conoce a <span class="accent">los mejores</span></h2><p>Ocho ligas. Decenas de guerreros.</p></div></section>
+    <section class="scene"><div class="box"><h2>Cara a <span class="accent">cara</span></h2><p>El momento antes del primer golpe.</p></div></section>
+    <section class="scene"><div class="box"><h2>El combate <span class="accent">nunca termina</span></h2><p>Entra en la plataforma.</p><a class="enter" href="index.html">Entrar al Universo MMA</a></div></section>
+  </div>
+  <div class="cue">Desliza<i>▾</i></div>
+
+  <!-- Librerias por CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  <script src="intro.js"></script>
+</body>
+</html>
