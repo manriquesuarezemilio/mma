@@ -176,7 +176,46 @@
     tgtPos.copy(wp[wp.length - 1].p); tgtLook.copy(wp[wp.length - 1].l); return wp.length - 1;
   }
 
-  window.addEventListener("resize", () => { camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); }, { passive: true });
+  /* ---------- POST-PROCESADO (look cinematográfico tipo Lusion) ---------- */
+  // bloom (brillo de luces), grano de película y aberración cromática sutil.
+  let composer = null, bloomPass = null;
+  (function setupPost() {
+    if (!THREE.EffectComposer || !THREE.RenderPass || !THREE.UnrealBloomPass || !THREE.ShaderPass) return; // sin addons -> render normal
+    try {
+      composer = new THREE.EffectComposer(renderer);
+      composer.addPass(new THREE.RenderPass(scene, camera));
+      bloomPass = new THREE.UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight),
+        isMobile ? 0.55 : 0.9,   // fuerza del bloom
+        0.6,                     // radio
+        0.82);                   // umbral (solo brilla lo muy luminoso)
+      composer.addPass(bloomPass);
+      // aberración cromática + viñeta en un shader ligero
+      const ChromaVignette = {
+        uniforms: { tDiffuse: { value: null }, amount: { value: isMobile ? 0.0018 : 0.0035 }, vig: { value: 0.9 } },
+        vertexShader: "varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }",
+        fragmentShader:
+          "uniform sampler2D tDiffuse; uniform float amount; uniform float vig; varying vec2 vUv;" +
+          "void main(){ vec2 d=vUv-0.5;" +
+          " float r=texture2D(tDiffuse, vUv+d*amount).r;" +
+          " float g=texture2D(tDiffuse, vUv).g;" +
+          " float b=texture2D(tDiffuse, vUv-d*amount).b;" +
+          " vec3 c=vec3(r,g,b);" +
+          " float v=smoothstep(0.9,vig*0.35,length(d));" + // viñeta
+          " gl_FragColor=vec4(c*mix(0.55,1.0,v),1.0); }"
+      };
+      composer.addPass(new THREE.ShaderPass(ChromaVignette));
+      if (THREE.FilmPass && !isMobile) composer.addPass(new THREE.FilmPass(0.22, 0.25, 648, false)); // grano
+      composer.setPixelRatio(Math.min(devicePixelRatio, 2));
+      composer.setSize(innerWidth, innerHeight);
+    } catch (e) { composer = null; }
+  })();
+
+  window.addEventListener("resize", () => {
+    camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
+    renderer.setSize(innerWidth, innerHeight);
+    if (composer) composer.setSize(innerWidth, innerHeight);
+    if (bloomPass) bloomPass.setSize(innerWidth, innerHeight);
+  }, { passive: true });
 
   const clock = new THREE.Clock();
   function animate() {
@@ -197,7 +236,7 @@
     for (const s of smokes) { s.m.position.z += s.sp * dt * 6; if (s.m.position.z > camera.position.z + 4) s.m.position.z = END_Z - 10; }
     const a = sparks.geometry.attributes.position; for (let i = 0; i < a.count; i++) { let y = a.getY(i) - dt * 0.6; if (y < 0) y = H; a.setY(i, y); } a.needsUpdate = true;
 
-    renderer.render(scene, camera);
+    if (composer) composer.render(dt); else renderer.render(scene, camera);
     requestAnimationFrame(animate);
   }
   animate();
