@@ -3,135 +3,143 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="El Universo MMA: organizaciones, luchadores, ranking P4P, combates, noticias, disciplinas y reglas." />
+  <meta name="description" content="EL UNIVERSO MMA: organizaciones, luchadores, rankings P4P, cara a cara, combates y noticias. Plataforma premium de deportes de combate." />
   <meta name="theme-color" content="#0a0a0c" />
-  <title>EL UNIVERSO MMA</title>
+  <title>EL UNIVERSO MMA · El combate empieza aquí</title>
 
-  <!-- Favicon SVG -->
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a0a0c'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='%23e10a17' font-family='Arial Black,Arial' font-weight='900'%3EM%3C/text%3E%3C/svg%3E" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a0a0c'/%3E%3Ctext x='50' y='72' font-size='64' text-anchor='middle' fill='%23e10a17' font-family='Arial Black,Arial' font-weight='900'%3EM%3C/text%3E%3C/svg%3E" />
 
-  <!-- Open Graph / vista previa al compartir -->
   <meta property="og:title" content="EL UNIVERSO MMA" />
-  <meta property="og:description" content="Organizaciones, luchadores, ranking P4P, combates, disciplinas y reglas del MMA." />
+  <meta property="og:description" content="Plataforma premium de MMA: organizaciones, luchadores, rankings, cara a cara, combates y noticias." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://manriquesuarezemilio.github.io/mma/" />
   <meta name="twitter:card" content="summary" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Barra de progreso de scroll -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
   <!-- NAV -->
   <header class="nav" id="nav">
     <div class="nav-inner">
-      <a href="#inicio" class="logo"><span class="logo-mark">●</span> UNIVERSO<strong>MMA</strong></a>
-      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+      <a href="#inicio" class="logo"><span class="logo-mark">◆</span> UNIVERSO<strong>MMA</strong></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
       <nav class="nav-links" id="navLinks" aria-label="Navegación principal">
         <a href="#inicio">Inicio</a>
         <a href="#organizaciones">Organizaciones</a>
-        <a href="#p4p">Ranking P4P</a>
-        <a href="#favoritos">Favoritos</a>
-        <a href="#comparar">Comparar</a>
-        <a href="#combates">Próximos</a>
+        <a href="#buscador">Luchadores</a>
+        <a href="#p4p">Rankings</a>
+        <a href="#comparar">Cara a cara</a>
+        <a href="#combates">Combates</a>
         <a href="#noticias">Noticias</a>
-        <a href="#disciplinas">Disciplinas</a>
         <a href="#reglas">Reglas</a>
         <button class="theme-btn" id="themeBtn" aria-label="Cambiar tema" title="Cambiar tema">🌙</button>
       </nav>
     </div>
   </header>
 
-  <!-- HERO -->
+  <!-- HERO CINEMATOGRÁFICO -->
   <section class="hero" id="inicio">
-    <div class="hero-overlay"></div>
-    <div class="hero-content reveal">
-      <span class="eyebrow">Deporte de combate · Nº1 mundial</span>
-      <h1>EL UNIVERSO <span class="accent">MMA</span></h1>
-      <p class="hero-sub">Los mejores luchadores. Las mayores organizaciones. Una sola pasión.</p>
-      <div class="hero-btns">
-        <a href="#organizaciones" class="btn btn-primary">Explorar luchadores</a>
-        <a href="#organizaciones" class="btn btn-ghost">Descubrir organizaciones</a>
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-vignette"></div>
+    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-content">
+      <span class="eyebrow reveal">Plataforma de deportes de combate</span>
+      <h1 class="hero-title"><span class="line">EL UNIVERSO</span><span class="line accent">MMA</span></h1>
+      <p class="hero-tag" id="heroType">EL COMBATE EMPIEZA AQUÍ</p>
+      <div class="hero-btns reveal">
+        <a href="#buscador" class="btn btn-primary">Explorar luchadores</a>
+        <a href="#p4p" class="btn btn-ghost">Ver rankings</a>
+        <a href="#organizaciones" class="btn btn-ghost">Descubrir ligas</a>
       </div>
-      <div class="hero-stats">
-        <div class="stat"><span class="stat-num" data-count="8">0</span><span class="stat-label">Organizaciones</span></div>
-        <div class="stat"><span class="stat-num" data-count="9">0</span><span class="stat-label">Categorías de peso</span></div>
-        <div class="stat"><span class="stat-num" data-count="4">0</span><span class="stat-label">Disciplinas base</span></div>
-      </div>
-      <div class="hero-tags">
-        <span class="tag">UFC</span><span class="tag">PFL</span><span class="tag">ONE</span>
-        <span class="tag">RIZIN</span><span class="tag">OKTAGON</span><span class="tag">KSW</span>
-      </div>
+      <div class="hero-featured" id="heroFeatured"></div>
     </div>
-    <a href="#organizaciones" class="scroll-cue" aria-label="Bajar">▾</a>
+    <a href="#organizaciones" class="scroll-cue" aria-label="Desplázate hacia abajo"><span>Desliza</span><i>▾</i></a>
   </section>
 
   <!-- ORGANIZACIONES -->
   <section class="section" id="organizaciones">
     <div class="section-head reveal">
-      <h2>Organizaciones del MMA</h2>
-      <p class="section-desc">Pulsa una organización para desplegar sus luchadores. Puedes abrir varias a la vez.</p>
-    </div>
-    <div class="filters reveal" id="orgFilters">
-      <input type="search" id="searchFighter" class="search" placeholder="🔎 Buscar luchador por nombre…" aria-label="Buscar luchador" />
-      <select id="filterPeso" class="select" aria-label="Filtrar por categoría de peso"><option value="">Todas las categorías</option></select>
-      <select id="filterSexo" class="select" aria-label="Filtrar por sexo">
-        <option value="">Ambos sexos</option><option value="M">Masculino</option><option value="F">Femenino</option>
-      </select>
-      <button class="btn-mini" id="expandAll">Abrir todas</button>
-      <button class="btn-mini" id="collapseAll">Cerrar todas</button>
-    </div>
-    <div class="org-list" id="orgList"><!-- JS --></div>
-  </section>
-
-  <span id="luchadores" class="anchor"></span>
-
-  <!-- P4P -->
-  <section class="section section-alt" id="p4p">
-    <div class="section-head reveal">
-      <h2>Pound for Pound</h2>
-      <p class="section-desc">Los mejores libra por libra, sin importar el peso. <strong class="warn">Clasificación editorial propia, no oficial.</strong></p>
+      <span class="kicker">Explora</span>
+      <h2>El mundo del MMA</h2>
+      <p class="section-desc">Pulsa una liga para desplegar sus luchadores. Puedes abrir varias a la vez.</p>
     </div>
     <div class="filters reveal">
-      <select id="p4pSort" class="select" aria-label="Ordenar ranking">
-        <option value="pos">Ordenar: posición</option>
-        <option value="nombre">Ordenar: nombre</option>
-      </select>
-      <span class="meta-note" id="p4pMeta"></span>
+      <input type="search" id="orgSearch" class="search" placeholder="🔎 Buscar luchador en las ligas…" aria-label="Buscar luchador" />
+      <select id="orgPeso" class="select" aria-label="Categoría de peso"><option value="">Todas las categorías</option></select>
+      <select id="orgPais" class="select" aria-label="País"><option value="">Todos los países</option></select>
+      <button class="btn-mini" id="expandAll">Ver todas</button>
+      <button class="btn-mini" id="collapseAll">Mostrar menos</button>
     </div>
-    <div class="p4p-grid" id="p4pGrid"></div>
+    <div class="org-list" id="orgList"></div>
   </section>
 
-  <!-- FAVORITOS -->
-  <section class="section" id="favoritos">
+  <!-- BUSCADOR AVANZADO -->
+  <section class="section section-alt" id="buscador">
     <div class="section-head reveal">
-      <h2>Tus favoritos</h2>
-      <p class="section-desc">Pulsa la estrella de cualquier luchador para guardarlo. Se recuerda en este navegador.</p>
+      <span class="kicker">Modo exploración</span>
+      <h2>Busca a tu luchador</h2>
+      <p class="section-desc">Filtra en tiempo real por nombre, liga, peso, país y sexo.</p>
     </div>
-    <div class="fighter-grid" id="favGrid"></div>
+    <div class="filters reveal">
+      <input type="search" id="fSearch" class="search" placeholder="🔎 Nombre del luchador…" aria-label="Nombre" />
+      <select id="fOrg" class="select" aria-label="Organización"><option value="">Todas las ligas</option></select>
+      <select id="fPeso" class="select" aria-label="Peso"><option value="">Todas las categorías</option></select>
+      <select id="fPais" class="select" aria-label="País"><option value="">Todos los países</option></select>
+      <select id="fSexo" class="select" aria-label="Sexo"><option value="">Ambos sexos</option><option value="M">Masculino</option><option value="F">Femenino</option></select>
+      <button class="btn-mini" id="fClear">Borrar filtros</button>
+    </div>
+    <div class="active-chips" id="activeChips"></div>
+    <div class="result-count" id="resultCount"></div>
+    <div class="fighter-grid" id="searchGrid"></div>
   </section>
 
-  <!-- COMPARAR -->
+  <!-- P4P PODIO -->
+  <section class="section" id="p4p">
+    <div class="section-head reveal">
+      <span class="kicker">Lo mejor de lo mejor</span>
+      <h2>Ranking Pound for Pound</h2>
+      <p class="section-desc">Los mejores libra por libra. <strong class="warn">Clasificación editorial propia, no oficial.</strong> <span id="p4pMeta" class="meta-note"></span></p>
+    </div>
+    <div class="filters reveal">
+      <select id="p4pSort" class="select" aria-label="Ordenar"><option value="pos">Por posición</option><option value="nombre">Por nombre</option><option value="org">Por organización</option></select>
+    </div>
+    <div class="podium" id="podium"></div>
+    <div class="p4p-rest" id="p4pRest"></div>
+  </section>
+
+  <!-- COMPARADOR -->
   <section class="section section-alt" id="comparar">
     <div class="section-head reveal">
-      <h2>Comparar luchadores</h2>
-      <p class="section-desc">Elige dos luchadores y míralos lado a lado.</p>
+      <span class="kicker">Cara a cara</span>
+      <h2>Fighter vs Fighter</h2>
+      <p class="section-desc">Elige dos luchadores y míralos enfrentados. Solo comparamos datos verificables.</p>
     </div>
     <div class="filters reveal">
       <select id="cmpA" class="select" aria-label="Luchador A"></select>
+      <button class="btn-mini" id="cmpSwap" title="Intercambiar">⇄ Intercambiar</button>
       <select id="cmpB" class="select" aria-label="Luchador B"></select>
+      <button class="btn-mini" id="cmpClear">Limpiar</button>
     </div>
-    <div class="compare" id="compareBox"></div>
+    <div class="versus" id="versus"></div>
   </section>
 
-  <!-- PRÓXIMOS COMBATES -->
+  <!-- COMBATES -->
   <section class="section" id="combates">
     <div class="section-head reveal">
+      <span class="kicker">Agenda</span>
       <h2>Próximos combates</h2>
-      <p class="section-desc">Contenido de demostración. No son enfrentamientos confirmados.</p>
+      <p class="section-desc"><strong class="warn">Demostración:</strong> no son enfrentamientos confirmados. Sin fuente en directo conectada.</p>
+    </div>
+    <div class="filters reveal">
+      <button class="btn-mini tab active" data-fighttab="next">Próximos</button>
+      <button class="btn-mini tab" data-fighttab="past">Finalizados</button>
+      <select id="fightOrg" class="select" aria-label="Filtrar por organización"><option value="">Todas las ligas</option></select>
     </div>
     <div class="fight-grid" id="fightGrid"></div>
   </section>
@@ -139,46 +147,43 @@
   <!-- NOTICIAS -->
   <section class="section section-alt" id="noticias">
     <div class="section-head reveal">
-      <h2>Últimas noticias</h2>
-      <p class="section-desc"><strong class="warn">Demostración:</strong> no hay fuente de noticias conectada.</p>
+      <span class="kicker">Actualidad</span>
+      <h2>Noticias</h2>
+      <p class="section-desc"><strong class="warn">Demostración:</strong> contenido de ejemplo, sin fuente de noticias conectada.</p>
     </div>
+    <div class="filters reveal">
+      <input type="search" id="newsSearch" class="search" placeholder="🔎 Buscar noticia…" aria-label="Buscar noticia" />
+      <select id="newsTag" class="select" aria-label="Categoría"><option value="">Todas</option></select>
+    </div>
+    <div class="news-featured" id="newsFeatured"></div>
     <div class="news-grid" id="newsGrid"></div>
   </section>
 
-  <!-- CATEGORÍAS DE PESO -->
+  <!-- CATEGORÍAS -->
   <section class="section" id="categorias">
-    <div class="section-head reveal">
-      <h2>Categorías de peso</h2>
-      <p class="section-desc">Referencia general. Los límites y divisiones pueden variar según la organización.</p>
-    </div>
+    <div class="section-head reveal"><span class="kicker">Divisiones</span><h2>Categorías de peso</h2><p class="section-desc">Referencia general; los límites varían por organización.</p></div>
     <div class="weight-grid" id="weightGrid"></div>
   </section>
 
   <!-- DISCIPLINAS -->
   <section class="section section-alt" id="disciplinas">
-    <div class="section-head reveal">
-      <h2>Disciplinas</h2>
-      <p class="section-desc">Las bases que se combinan en el MMA.</p>
-    </div>
+    <div class="section-head reveal"><span class="kicker">Las bases</span><h2>Disciplinas</h2><p class="section-desc">Lo que se combina dentro del octágono.</p></div>
     <div class="disc-grid" id="discGrid"></div>
   </section>
 
   <!-- REGLAS -->
   <section class="section" id="reglas">
-    <div class="section-head reveal">
-      <h2>Reglas del MMA</h2>
-      <p class="section-desc">La duración y las reglas pueden variar según la competición.</p>
-    </div>
+    <div class="section-head reveal"><span class="kicker">Cómo funciona</span><h2>Reglas del MMA</h2><p class="section-desc">La duración y las reglas varían según la competición.</p></div>
     <div class="rules-grid" id="rulesGrid"></div>
   </section>
 
   <footer class="footer">
-    <p><strong>EL UNIVERSO MMA</strong> · Web de aficionado con fines informativos.</p>
+    <p><strong>EL UNIVERSO MMA</strong> · Web de aficionado, fines informativos.</p>
     <p class="muted" id="footMeta"></p>
   </footer>
 
-  <!-- MODAL perfil -->
-  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalName" hidden>
+  <!-- MODAL -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true" hidden>
     <div class="modal-backdrop" data-close></div>
     <div class="modal-card">
       <button class="modal-close" data-close aria-label="Cerrar">✕</button>
@@ -186,9 +191,7 @@
     </div>
   </div>
 
-  <!-- Aviso (toast) -->
   <div class="toast" id="toast" hidden></div>
-
   <button class="to-top" id="toTop" aria-label="Volver arriba" hidden>▲</button>
 
   <script src="data.js"></script>

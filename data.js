@@ -129,17 +129,26 @@ const P4P = {
   ]
 };
 
-/* Noticias — CONTENIDO DE DEMOSTRACIÓN. No es información en directo. */
+/* Noticias — CONTENIDO DE DEMOSTRACIÓN. No es información en directo.
+   destacada: true -> va en formato panorámico grande.
+   tag: Noticia | Análisis | Resultado | Entrevista (etiquetas de ejemplo). */
 const NOTICIAS = [
-  { fecha: "2026-10-20", titulo: "Ejemplo: se anuncia cartelera de fin de año", resumen: "Contenido de demostración. Conecta una fuente real para datos en vivo.", tag: "Demo" },
-  { fecha: "2026-10-18", titulo: "Ejemplo: debut de promesa europea", resumen: "Contenido de demostración. No es una noticia verificada.", tag: "Demo" },
-  { fecha: "2026-10-15", titulo: "Ejemplo: cambio de categoría de un campeón", resumen: "Contenido de demostración, sin fuente conectada.", tag: "Demo" }
+  { fecha:"2026-10-20", destacada:true,  org:"UFC", tag:"Noticia",   titulo:"Ejemplo: se anuncia la cartelera de fin de año", resumen:"Contenido de demostración. Conecta una fuente real para datos en vivo.", cuerpo:"Esta es una noticia de ejemplo para mostrar el diseño. No procede de ninguna fuente real ni está verificada. Sustitúyela editando data.js o conectando una API de noticias." },
+  { fecha:"2026-10-18", destacada:false, org:"OKTAGON", tag:"Entrevista", titulo:"Ejemplo: entrevista a una promesa europea", resumen:"Contenido de demostración. No es una entrevista real.", cuerpo:"Texto de ejemplo. Edítalo en data.js." },
+  { fecha:"2026-10-16", destacada:false, org:"PFL", tag:"Análisis",  titulo:"Ejemplo: análisis de una división", resumen:"Contenido de demostración, sin fuente conectada.", cuerpo:"Texto de ejemplo. Edítalo en data.js." },
+  { fecha:"2026-10-15", destacada:false, org:"UFC", tag:"Resultado", titulo:"Ejemplo: resultado de una velada", resumen:"Contenido de demostración. No es un resultado real.", cuerpo:"Texto de ejemplo. Edítalo en data.js." }
 ];
 
-/* Próximos combates — DEMOSTRACIÓN. No son enfrentamientos confirmados. */
+/* Combates — DEMOSTRACIÓN. No son enfrentamientos ni resultados reales.
+   estado: "next" (próximo) | "past" (finalizado)
+   when:  fecha/hora ISO para el contador (null = "por confirmar", sin cuenta atrás)
+   main:  true marca el combate estelar
+   verificado: true muestra "COMBATE CONFIRMADO" (solo demo) */
 const PROXIMOS = [
-  { evento: "Evento de ejemplo 1", fecha: "Por confirmar", peso: "Pesado", a: { nombre: "Luchador A", bandera: "🏳️" }, b: { nombre: "Luchador B", bandera: "🏳️" } },
-  { evento: "Evento de ejemplo 2", fecha: "Por confirmar", peso: "Ligero", a: { nombre: "Luchador C", bandera: "🏳️" }, b: { nombre: "Luchador D", bandera: "🏳️" } }
+  { estado:"next", evento:"Evento de ejemplo · Estelar", org:"UFC", peso:"Pesado", when:"2026-12-31T23:00:00Z", main:true,  verificado:false, a:{nombre:"Luchador A", bandera:"🏳️"}, b:{nombre:"Luchador B", bandera:"🏳️"} },
+  { estado:"next", evento:"Evento de ejemplo 2",         org:"PFL", peso:"Ligero",  when:"2027-01-15T22:00:00Z", main:false, verificado:false, a:{nombre:"Luchador C", bandera:"🏳️"}, b:{nombre:"Luchador D", bandera:"🏳️"} },
+  { estado:"next", evento:"Evento de ejemplo 3",         org:"ONE", peso:"Pluma",   when:null,                   main:false, verificado:false, a:{nombre:"Luchador E", bandera:"🏳️"}, b:{nombre:"Luchador F", bandera:"🏳️"} },
+  { estado:"past", evento:"Evento pasado (demo)",        org:"UFC", peso:"Medio",   when:null,                   main:false, verificado:false, a:{nombre:"Luchador G", bandera:"🏳️"}, b:{nombre:"Luchador H", bandera:"🏳️"} }
 ];
 
 /* Categorías de peso (referencia general; varían por organización) */
