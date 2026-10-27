@@ -1,0 +1,94 @@
+/* ============================================================
+   cine.css — capa cinematográfica (scroll storytelling)
+   Se suma a style.css sin tocarlo. Todo se apaga con
+   prefers-reduced-motion. Usa transform/opacity (fluido) y
+   scroll-driven animations nativas cuando el navegador puede.
+   ============================================================ */
+
+/* ---------- REVEAL direccional con desenfoque (IntersectionObserver) ---------- */
+[data-cine]{opacity:0;transform:translateY(40px);filter:blur(10px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1),filter .9s ease}
+[data-cine="left"]{transform:translateX(-60px)}
+[data-cine="right"]{transform:translateX(60px)}
+[data-cine="zoom"]{transform:scale(.9);filter:blur(14px)}
+[data-cine].in{opacity:1;transform:none;filter:none}
+/* escalonado por data-delay (lo pone el JS) */
+
+/* ---------- ESCENAS STICKY (storytelling) ---------- */
+.scene{position:relative}
+.scene-tall{min-height:220vh}                 /* espacio de scroll para que la animación se aprecie */
+.scene-sticky{position:sticky;top:0;height:100vh;display:grid;place-items:center;overflow:hidden}
+.scene-bg{position:absolute;inset:-10%;z-index:0;background-size:cover;background-position:center;will-change:transform;transition:transform .1s linear}
+.scene-dark{position:absolute;inset:0;z-index:1;background:radial-gradient(circle at 50% 45%,transparent 30%,rgba(0,0,0,.82) 100%)}
+.scene-inner{position:relative;z-index:2;text-align:center;max-width:900px;padding:1.5rem}
+.scene-inner h2{font-family:"Oswald";text-transform:uppercase;font-size:clamp(2rem,7vw,5rem);line-height:.95;letter-spacing:1px;text-shadow:0 6px 40px rgba(0,0,0,.7)}
+.scene-inner p{color:var(--muted);font-size:clamp(1rem,2.4vw,1.4rem);margin-top:1rem}
+
+/* octágono dibujado en CSS (sin imagen externa) */
+.octagon{position:absolute;z-index:1;left:50%;top:50%;width:min(80vmin,620px);aspect-ratio:1;transform:translate(-50%,-50%);clip-path:polygon(30% 0,70% 0,100% 30%,100% 70%,70% 100%,30% 100%,0 70%,0 30%);
+  background:
+    radial-gradient(circle at 50% 50%,rgba(225,10,23,.18),transparent 62%),
+    repeating-conic-gradient(from 0deg,rgba(255,255,255,.04) 0deg 6deg,transparent 6deg 12deg);
+  border:0;box-shadow:inset 0 0 120px rgba(225,10,23,.35);opacity:.9}
+.octagon::after{content:"";position:absolute;inset:6%;clip-path:inherit;border:2px solid rgba(225,10,23,.5);box-shadow:0 0 40px var(--red-glow)}
+
+/* luz roja que recorre un título */
+.sweep{position:relative;display:inline-block;background:linear-gradient(90deg,var(--text) 0 40%,var(--red-2) 50%,var(--text) 60% 100%);background-size:280% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sweep 3.5s ease-in-out infinite}
+@keyframes sweep{0%{background-position:140% 0}60%,100%{background-position:-40% 0}}
+
+/* retratos que entran desde los lados en la escena de luchadores */
+.cast{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2rem}
+.cast .c{width:120px;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--surface);opacity:0;transform:translateY(40px) scale(.9);transition:all .8s cubic-bezier(.2,.7,.2,1)}
+.scene-sticky.active .cast .c{opacity:1;transform:none}
+.scene-sticky.active .cast .c:nth-child(2){transition-delay:.08s}
+.scene-sticky.active .cast .c:nth-child(3){transition-delay:.16s}
+.scene-sticky.active .cast .c:nth-child(4){transition-delay:.24s}
+.scene-sticky.active .cast .c:nth-child(5){transition-delay:.32s}
+.cast .c img{width:100%;height:150px;object-fit:cover;display:block}
+.cast .c span{display:block;font-size:.72rem;padding:.35rem;text-align:center;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* escena cara a cara: dos retratos que se acercan */
+.faceoff{position:absolute;inset:0;z-index:1;display:grid;grid-template-columns:1fr 1fr;align-items:center}
+.faceoff .fo{width:min(42vmin,320px);aspect-ratio:3/4;border-radius:18px;overflow:hidden;border:1px solid var(--line);will-change:transform}
+.faceoff .fo img{width:100%;height:100%;object-fit:cover}
+.faceoff .left{justify-self:start;margin-left:4vw;transform:translateX(-60vw)}
+.faceoff .right{justify-self:end;margin-right:4vw;transform:translateX(60vw)}
+.faceoff .vs{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.4);font-family:"Oswald";font-weight:700;font-size:clamp(3rem,10vw,7rem);color:#fff;text-shadow:0 0 40px var(--red-glow);opacity:0}
+
+/* escena final */
+.ending .scene-inner h2{color:var(--red-2)}
+.ending .btns{display:flex;gap:1rem;justify-content:center;margin-top:2rem;flex-wrap:wrap}
+
+/* conexión entre secciones: velo degradado superior/inferior */
+.section, .scene-sticky{position:relative}
+.cine-link{position:relative}
+.cine-link::before{content:"";position:absolute;top:-1px;left:0;right:0;height:120px;background:linear-gradient(180deg,var(--bg),transparent);pointer-events:none;z-index:1}
+
+/* ---------- SCROLL-DRIVEN nativo (progressive enhancement) ---------- */
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion: no-preference){
+    [data-sd="fade"]{animation:sdFade linear both;animation-timeline:view();animation-range:entry 0% entry 60%}
+    @keyframes sdFade{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+    [data-sd="zoom"]{animation:sdZoom linear both;animation-timeline:view();animation-range:entry 0% cover 40%}
+    @keyframes sdZoom{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
+  }
+}
+
+/* ---------- MÓVIL: reducir parallax/3D ---------- */
+@media(max-width:720px){
+  .scene-tall{min-height:170vh}
+  .faceoff .fo{width:min(38vmin,220px)}
+  .scene-bg{inset:-4%}
+}
+
+/* ---------- REDUCED MOTION: todo estático y legible ---------- */
+@media(prefers-reduced-motion:reduce){
+  [data-cine],[data-sd]{opacity:1 !important;transform:none !important;filter:none !important;transition:none !important}
+  .scene-tall{min-height:auto}
+  .scene-sticky{position:relative;height:auto;min-height:60vh;padding:4rem 1rem}
+  .scene-bg{position:absolute;transform:none !important}
+  .cast .c{opacity:1 !important;transform:none !important}
+  .faceoff{position:relative;height:auto}
+  .faceoff .left,.faceoff .right{transform:none !important;margin:0 auto}
+  .faceoff .vs{position:relative;left:auto;top:auto;transform:none !important;opacity:1 !important;margin:1rem 0}
+  .sweep{animation:none;background:none;-webkit-background-clip:initial;background-clip:initial;color:var(--red-2)}
+}
