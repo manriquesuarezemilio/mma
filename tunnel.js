@@ -75,7 +75,7 @@
   const arena = new THREE.Group(); arena.position.set(0, 0, END_Z - 14); scene.add(arena);
   const standMat = new THREE.MeshStandardMaterial({ color: 0x101014, metalness: 0.2, roughness: 1 });
   [-17, 17].forEach(x => { const s = new THREE.Mesh(new THREE.BoxGeometry(10, 18, 56), standMat); s.position.set(x, 9, 0); arena.add(s); });
-  arena.add(Object.assign(new THREE.Mesh(new THREE.BoxGeometry(76, 30, 2), standMat), { position: new THREE.Vector3(0, 13, -30) }));
+  const backWall = new THREE.Mesh(new THREE.BoxGeometry(76, 30, 2), standMat); backWall.position.set(0, 13, -30); arena.add(backWall);
 
   // plataforma del octágono
   const plat = new THREE.Mesh(new THREE.CylinderGeometry(6.2, 6.8, 1, 8), new THREE.MeshStandardMaterial({ color: 0x18181d, metalness: .5, roughness: .55 }));
