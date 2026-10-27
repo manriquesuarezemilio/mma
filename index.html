@@ -1,10 +1,22 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="El Universo MMA: organizaciones, luchadores, ranking P4P, combates, noticias, disciplinas y reglas." />
+  <meta name="theme-color" content="#0a0a0c" />
   <title>EL UNIVERSO MMA</title>
+
+  <!-- Favicon SVG -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a0a0c'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='%23e10a17' font-family='Arial Black,Arial' font-weight='900'%3EM%3C/text%3E%3C/svg%3E" />
+
+  <!-- Open Graph / vista previa al compartir -->
+  <meta property="og:title" content="EL UNIVERSO MMA" />
+  <meta property="og:description" content="Organizaciones, luchadores, ranking P4P, combates, disciplinas y reglas del MMA." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://manriquesuarezemilio.github.io/mma/" />
+  <meta name="twitter:card" content="summary" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -21,12 +33,14 @@
       <nav class="nav-links" id="navLinks" aria-label="Navegación principal">
         <a href="#inicio">Inicio</a>
         <a href="#organizaciones">Organizaciones</a>
-        <a href="#luchadores">Luchadores</a>
         <a href="#p4p">Ranking P4P</a>
+        <a href="#favoritos">Favoritos</a>
+        <a href="#comparar">Comparar</a>
         <a href="#combates">Próximos</a>
         <a href="#noticias">Noticias</a>
         <a href="#disciplinas">Disciplinas</a>
         <a href="#reglas">Reglas</a>
+        <button class="theme-btn" id="themeBtn" aria-label="Cambiar tema" title="Cambiar tema">🌙</button>
       </nav>
     </div>
   </header>
@@ -39,7 +53,7 @@
       <h1>EL UNIVERSO <span class="accent">MMA</span></h1>
       <p class="hero-sub">Los mejores luchadores. Las mayores organizaciones. Una sola pasión.</p>
       <div class="hero-btns">
-        <a href="#luchadores" class="btn btn-primary">Explorar luchadores</a>
+        <a href="#organizaciones" class="btn btn-primary">Explorar luchadores</a>
         <a href="#organizaciones" class="btn btn-ghost">Descubrir organizaciones</a>
       </div>
       <div class="hero-stats">
@@ -67,11 +81,12 @@
       <select id="filterSexo" class="select" aria-label="Filtrar por sexo">
         <option value="">Ambos sexos</option><option value="M">Masculino</option><option value="F">Femenino</option>
       </select>
+      <button class="btn-mini" id="expandAll">Abrir todas</button>
+      <button class="btn-mini" id="collapseAll">Cerrar todas</button>
     </div>
     <div class="org-list" id="orgList"><!-- JS --></div>
   </section>
 
-  <!-- LUCHADORES destacados (ancla de navegación: apunta a organizaciones) -->
   <span id="luchadores" class="anchor"></span>
 
   <!-- P4P -->
@@ -88,6 +103,28 @@
       <span class="meta-note" id="p4pMeta"></span>
     </div>
     <div class="p4p-grid" id="p4pGrid"></div>
+  </section>
+
+  <!-- FAVORITOS -->
+  <section class="section" id="favoritos">
+    <div class="section-head reveal">
+      <h2>Tus favoritos</h2>
+      <p class="section-desc">Pulsa la estrella de cualquier luchador para guardarlo. Se recuerda en este navegador.</p>
+    </div>
+    <div class="fighter-grid" id="favGrid"></div>
+  </section>
+
+  <!-- COMPARAR -->
+  <section class="section section-alt" id="comparar">
+    <div class="section-head reveal">
+      <h2>Comparar luchadores</h2>
+      <p class="section-desc">Elige dos luchadores y míralos lado a lado.</p>
+    </div>
+    <div class="filters reveal">
+      <select id="cmpA" class="select" aria-label="Luchador A"></select>
+      <select id="cmpB" class="select" aria-label="Luchador B"></select>
+    </div>
+    <div class="compare" id="compareBox"></div>
   </section>
 
   <!-- PRÓXIMOS COMBATES -->
@@ -148,6 +185,9 @@
       <div class="modal-body" id="modalBody"></div>
     </div>
   </div>
+
+  <!-- Aviso (toast) -->
+  <div class="toast" id="toast" hidden></div>
 
   <button class="to-top" id="toTop" aria-label="Volver arriba" hidden>▲</button>
 

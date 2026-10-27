@@ -1,6 +1,8 @@
 /* ============================================================
    app.js — EL UNIVERSO MMA
-   Toda la interactividad. Datos desde window.MMA (data.js).
+   Interactividad: tema, acordeones, buscador, filtros, modal,
+   favoritos, comparar, compartir (deep-link), toast.
+   Datos desde window.MMA (data.js).
    ============================================================ */
 (function () {
   "use strict";
@@ -11,6 +13,52 @@
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const inicial = (n) => (n || "?").trim().charAt(0).toUpperCase();
+
+  /* Color estable por nombre (para avatares) */
+  function colorDe(nombre) {
+    let h = 0; for (let i = 0; i < nombre.length; i++) h = (h * 31 + nombre.charCodeAt(i)) % 360;
+    return `linear-gradient(135deg, hsl(${h} 60% 32%), hsl(${(h + 40) % 360} 55% 18%))`;
+  }
+
+  /* ===== Índice plano de luchadores (para comparar / deep-link) ===== */
+  const TODOS = [];
+  D.ORGANIZACIONES.forEach(o => o.luchadores.forEach(l => TODOS.push({ ...l, org: o.nombre })));
+  const keyDe = (l) => `${l.org}::${l.nombre}`;
+
+  /* ===== Favoritos (localStorage) ===== */
+  const FAV_KEY = "mma_favoritos";
+  let favoritos = [];
+  try { favoritos = JSON.parse(localStorage.getItem(FAV_KEY) || "[]"); } catch { favoritos = []; }
+  const esFav = (k) => favoritos.includes(k);
+  function toggleFav(k) {
+    const i = favoritos.indexOf(k);
+    if (i >= 0) { favoritos.splice(i, 1); toast("Quitado de favoritos"); }
+    else { favoritos.push(k); toast("Añadido a favoritos ⭐"); }
+    try { localStorage.setItem(FAV_KEY, JSON.stringify(favoritos)); } catch {}
+    renderOrgs(); renderFav();
+  }
+
+  /* ===== Toast ===== */
+  const toastEl = $("#toast"); let toastT;
+  function toast(msg) {
+    toastEl.textContent = msg; toastEl.hidden = false;
+    requestAnimationFrame(() => toastEl.classList.add("show"));
+    clearTimeout(toastT);
+    toastT = setTimeout(() => { toastEl.classList.remove("show"); setTimeout(() => toastEl.hidden = true, 300); }, 2200);
+  }
+
+  /* ===== Tema claro/oscuro ===== */
+  const THEME_KEY = "mma_tema";
+  const themeBtn = $("#themeBtn");
+  function aplicarTema(t) {
+    document.documentElement.setAttribute("data-theme", t);
+    if (themeBtn) themeBtn.textContent = t === "light" ? "☀️" : "🌙";
+  }
+  aplicarTema(localStorage.getItem(THEME_KEY) || "dark");
+  if (themeBtn) themeBtn.addEventListener("click", () => {
+    const t = document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light";
+    aplicarTema(t); try { localStorage.setItem(THEME_KEY, t); } catch {}
+  });
 
   /* --- Estado de filtros --- */
   const filtro = { nombre: "", peso: "", sexo: "" };
@@ -32,7 +80,7 @@
   }));
   $("#toTop").addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 
-  /* Resaltar enlace activo según sección visible */
+  /* Resaltar enlace activo */
   const secciones = $$("section[id], span.anchor[id]");
   const spy = new IntersectionObserver((entries) => {
     entries.forEach(e => {
@@ -44,8 +92,7 @@
   }, { rootMargin: "-45% 0px -50% 0px" });
   secciones.forEach(s => spy.observe(s));
 
-  /* ===== Contadores del hero ===== */
-  const counters = $$(".stat-num");
+  /* ===== Contadores ===== */
   const cObs = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (!e.isIntersecting) return;
@@ -55,15 +102,15 @@
       cObs.unobserve(el);
     });
   }, { threshold: .6 });
-  counters.forEach(c => cObs.observe(c));
+  $$(".stat-num").forEach(c => cObs.observe(c));
 
-  /* ===== Reveal al hacer scroll ===== */
+  /* ===== Reveal ===== */
   const rObs = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); rObs.unobserve(e.target); } });
   }, { threshold: .12 });
   $$(".reveal").forEach(el => rObs.observe(el));
 
-  /* ===== Rellenar filtro de peso ===== */
+  /* ===== Filtro de peso ===== */
   (function () {
     const pesos = new Set();
     D.ORGANIZACIONES.forEach(o => o.luchadores.forEach(l => l.peso && pesos.add(l.peso)));
@@ -73,19 +120,28 @@
     });
   })();
 
-  /* ===== Tarjeta de luchador ===== */
+  /* ===== Avatar ===== */
+  function avatarHTML(l, cls) {
+    if (l.foto) return `<img src="${esc(l.foto)}" alt="${esc(l.nombre)}" loading="lazy" onerror="this.remove()" />`;
+    return `<div class="${cls}" style="background:${colorDe(l.nombre)}">${inicial(l.nombre)}</div>`;
+  }
+
+  /* ===== Tarjeta luchador ===== */
   function statusChip(l) {
     if (l.status) return `<span class="chip champ">${esc(l.status)}</span>`;
-    return `<span class="chip unknown" title="Dato no verificado">estatus sin verificar</span>`;
+    return `<span class="chip" title="Dato no verificado">estatus sin verificar</span>`;
   }
   function fighterCard(l, orgNombre) {
+    const k = keyDe({ ...l, org: orgNombre });
     const foto = l.foto
-      ? `<img src="${esc(l.foto)}" alt="${esc(l.nombre)}" loading="lazy" onerror="this.remove();this.parentNode.textContent='${inicial(l.nombre)}'" />`
+      ? `<img src="${esc(l.foto)}" alt="${esc(l.nombre)}" loading="lazy" onerror="this.remove()" />`
       : inicial(l.nombre);
     const rec = l.record ? esc(l.record) : "sin verificar";
+    const bgInicial = l.foto ? "" : `style="background:${colorDe(l.nombre)}"`;
     return `
-    <article class="fighter" data-nombre="${esc(l.nombre.toLowerCase())}" data-peso="${esc(l.peso)}" data-sexo="${esc(l.sexo || "")}">
-      <div class="fighter-photo">${foto}<span class="fighter-flag">${esc(l.bandera || "")}</span></div>
+    <article class="fighter" data-nombre="${esc(l.nombre.toLowerCase())}">
+      <button class="fav-star ${esFav(k) ? "on" : ""}" data-fav="${esc(k)}" aria-label="Favorito" title="Añadir a favoritos">★</button>
+      <div class="fighter-photo" ${bgInicial}>${foto}<span class="fighter-flag">${esc(l.bandera || "")}</span></div>
       <div class="fighter-body">
         <h4>${esc(l.nombre)}</h4>
         <span class="fighter-line">${esc(l.bandera || "")} ${esc(l.pais)} · ${esc(orgNombre)}</span>
@@ -97,7 +153,7 @@
     </article>`;
   }
 
-  /* ===== Render organizaciones (acordeones independientes) ===== */
+  /* ===== Organizaciones ===== */
   const orgList = $("#orgList");
   function renderOrgs() {
     orgList.innerHTML = "";
@@ -137,14 +193,14 @@
     $$(".org-head", orgList).forEach(head => {
       head.addEventListener("click", () => {
         const org = head.closest(".org");
-        const open = org.classList.toggle("open");           // independiente: no cierra las demás
+        const open = org.classList.toggle("open");
         head.setAttribute("aria-expanded", String(open));
       });
     });
     $$(".btn-profile", orgList).forEach(b => b.addEventListener("click", () => openProfile(JSON.parse(b.dataset.profile))));
+    $$(".fav-star", orgList).forEach(b => b.addEventListener("click", (e) => { e.stopPropagation(); toggleFav(b.dataset.fav); }));
   }
 
-  /* Al filtrar, si hay búsqueda por nombre, abrimos las orgs con resultados */
   function aplicarFiltros() {
     const abiertas = $$(".org.open", orgList).map(o => o.dataset.id);
     renderOrgs();
@@ -159,6 +215,48 @@
   $("#searchFighter").addEventListener("input", e => { filtro.nombre = e.target.value.trim().toLowerCase(); aplicarFiltros(); });
   $("#filterPeso").addEventListener("change", e => { filtro.peso = e.target.value; aplicarFiltros(); });
   $("#filterSexo").addEventListener("change", e => { filtro.sexo = e.target.value; aplicarFiltros(); });
+  $("#expandAll").addEventListener("click", () => $$(".org", orgList).forEach(o => { o.classList.add("open"); $(".org-head", o).setAttribute("aria-expanded", "true"); }));
+  $("#collapseAll").addEventListener("click", () => $$(".org", orgList).forEach(o => { o.classList.remove("open"); $(".org-head", o).setAttribute("aria-expanded", "false"); }));
+
+  /* ===== Favoritos: render ===== */
+  const favGrid = $("#favGrid");
+  function renderFav() {
+    const list = TODOS.filter(l => esFav(keyDe(l)));
+    favGrid.innerHTML = list.length
+      ? list.map(l => fighterCard(l, l.org)).join("")
+      : `<div class="empty"><span class="empty-ico">⭐</span>Aún no tienes favoritos. Pulsa la estrella de un luchador.</div>`;
+    $$(".btn-profile", favGrid).forEach(b => b.addEventListener("click", () => openProfile(JSON.parse(b.dataset.profile))));
+    $$(".fav-star", favGrid).forEach(b => b.addEventListener("click", (e) => { e.stopPropagation(); toggleFav(b.dataset.fav); }));
+  }
+
+  /* ===== Comparar ===== */
+  const cmpA = $("#cmpA"), cmpB = $("#cmpB"), compareBox = $("#compareBox");
+  function fillCmpSelects() {
+    const opts = `<option value="">— elige —</option>` + TODOS.map((l, i) => `<option value="${i}">${esc(l.nombre)} (${esc(l.org)})</option>`).join("");
+    cmpA.innerHTML = opts; cmpB.innerHTML = opts;
+  }
+  function cmpCard(l) {
+    if (!l) return `<div class="cmp-empty">Elige un luchador</div>`;
+    const dato = (v) => v ? esc(v) : "Sin verificar";
+    return `
+      <div class="cmp-card">
+        <div class="cmp-ava" style="background:${colorDe(l.nombre)}">${inicial(l.nombre)}</div>
+        <h4>${esc(l.nombre)}</h4>
+        <p class="fighter-line">${esc(l.bandera || "")} ${esc(l.pais)}</p>
+        <div class="cmp-row"><span>Organización</span><strong>${esc(l.org)}</strong></div>
+        <div class="cmp-row"><span>Categoría</span><strong>${esc(l.peso)}</strong></div>
+        <div class="cmp-row"><span>Estilo</span><strong>${dato(l.estilo)}</strong></div>
+        <div class="cmp-row"><span>Récord</span><strong>${dato(l.record)}</strong></div>
+        <div class="cmp-row"><span>Estatus</span><strong>${dato(l.status)}</strong></div>
+      </div>`;
+  }
+  function renderCompare() {
+    const a = cmpA.value === "" ? null : TODOS[+cmpA.value];
+    const b = cmpB.value === "" ? null : TODOS[+cmpB.value];
+    compareBox.innerHTML = cmpCard(a) + cmpCard(b);
+  }
+  cmpA.addEventListener("change", renderCompare);
+  cmpB.addEventListener("change", renderCompare);
 
   /* ===== Modal perfil ===== */
   const modal = $("#modal"), modalBody = $("#modalBody");
@@ -166,35 +264,55 @@
     const rec = l.record ? esc(l.record) : "Sin verificar";
     const status = l.status ? esc(l.status) : "Sin verificar";
     const estilo = l.estilo ? esc(l.estilo) : "Sin verificar";
+    const k = keyDe(l);
+    const url = location.origin + location.pathname + "#fighter=" + encodeURIComponent(k);
     modalBody.innerHTML = `
-      <div class="modal-hero">${l.foto ? `<img src="${esc(l.foto)}" alt="${esc(l.nombre)}" style="width:100%;height:100%;object-fit:cover;border-radius:14px" onerror="this.remove()">` : inicial(l.nombre)}</div>
+      <div class="modal-hero" style="background:${colorDe(l.nombre)}">${l.foto ? `<img src="${esc(l.foto)}" alt="${esc(l.nombre)}" style="width:100%;height:100%;object-fit:cover;border-radius:14px" onerror="this.remove()">` : inicial(l.nombre)}</div>
       <h3>${esc(l.nombre)}</h3>
       <p class="fighter-line">${esc(l.bandera || "")} ${esc(l.pais)} · ${esc(l.org)}</p>
+      <div class="modal-actions">
+        <button class="btn-mini" id="mFav">${esFav(k) ? "★ En favoritos" : "☆ Añadir a favoritos"}</button>
+        <button class="btn-mini" id="mShare">🔗 Compartir perfil</button>
+      </div>
       <div class="modal-grid">
         <div class="mg"><span>Categoría</span><strong>${esc(l.peso)}</strong></div>
         <div class="mg"><span>Estilo</span><strong>${estilo}</strong></div>
         <div class="mg"><span>Récord</span><strong>${rec}</strong></div>
         <div class="mg"><span>Estatus</span><strong>${status}</strong></div>
       </div>
-      <p class="modal-note">Los datos que aparecen como «Sin verificar» no se muestran como oficiales. Edita <code>data.js</code> para completarlos con fuentes fiables. Última revisión: ${esc(D.DATA_ACTUALIZADO)}.</p>`;
+      <p class="modal-note">Los datos «Sin verificar» no se muestran como oficiales. Edita <code>data.js</code> para completarlos. Última revisión: ${esc(D.DATA_ACTUALIZADO)}.</p>`;
     modal.hidden = false;
     document.body.style.overflow = "hidden";
     $(".modal-close", modal).focus();
+    $("#mFav").addEventListener("click", () => { toggleFav(k); closeModal(); });
+    $("#mShare").addEventListener("click", () => {
+      if (navigator.clipboard) navigator.clipboard.writeText(url).then(() => toast("Enlace copiado 🔗"), () => toast(url));
+      else toast(url);
+    });
   }
-  function closeModal() { modal.hidden = true; document.body.style.overflow = ""; }
+  function closeModal() { modal.hidden = true; document.body.style.overflow = ""; if (location.hash.startsWith("#fighter=")) history.replaceState(null, "", location.pathname); }
   $$("[data-close]", modal).forEach(el => el.addEventListener("click", closeModal));
   document.addEventListener("keydown", e => { if (e.key === "Escape" && !modal.hidden) closeModal(); });
+
+  /* ===== Deep-link a perfil ===== */
+  function abrirDesdeHash() {
+    const m = location.hash.match(/^#fighter=(.+)$/);
+    if (!m) return;
+    const k = decodeURIComponent(m[1]);
+    const l = TODOS.find(x => keyDe(x) === k);
+    if (l) openProfile(l);
+  }
+  window.addEventListener("hashchange", abrirDesdeHash);
 
   /* ===== P4P ===== */
   const p4pGrid = $("#p4pGrid");
   $("#p4pMeta").textContent = `Actualizado: ${D.P4P.actualizado} · ${D.P4P.fuente}`;
   function renderP4P(sort = "pos") {
-    const lista = [...D.P4P.lista].sort((a, b) =>
-      sort === "nombre" ? a.nombre.localeCompare(b.nombre) : a.pos - b.pos);
+    const lista = [...D.P4P.lista].sort((a, b) => sort === "nombre" ? a.nombre.localeCompare(b.nombre) : a.pos - b.pos);
     p4pGrid.innerHTML = lista.map(p => `
       <article class="p4p-card">
         <span class="p4p-pos">${p.pos}</span>
-        <div class="p4p-photo">${p.foto ? `<img src="${esc(p.foto)}" alt="${esc(p.nombre)}" style="width:100%;height:100%;object-fit:cover;border-radius:12px" onerror="this.remove()">` : inicial(p.nombre)}</div>
+        <div class="p4p-photo" style="background:${colorDe(p.nombre)}">${p.foto ? `<img src="${esc(p.foto)}" alt="${esc(p.nombre)}" style="width:100%;height:100%;object-fit:cover;border-radius:12px" onerror="this.remove()">` : inicial(p.nombre)}</div>
         <h4>${esc(p.nombre)}</h4>
         <span class="p4p-sub">${esc(p.org)} · ${esc(p.peso)}</span>
         <p class="p4p-why">${esc(p.motivo)}</p>
@@ -222,7 +340,7 @@
       <div class="news-date">${esc(n.fecha)}</div>
     </article>`).join("");
 
-  /* ===== Categorías de peso ===== */
+  /* ===== Categorías ===== */
   $("#weightGrid").innerHTML = D.CATEGORIAS.map(c => `
     <div class="weight"><span class="wsex">${esc(c.sexo)}</span><h4>${esc(c.div)}</h4><p>${esc(c.kg)}</p></div>`).join("");
 
@@ -234,10 +352,14 @@
   $("#rulesGrid").innerHTML = D.REGLAS.map(r => `
     <article class="rule"><div class="rule-ico">${esc(r.icono)}</div><h3>${esc(r.t)}</h3><p>${esc(r.d)}</p></article>`).join("");
 
-  /* ===== Footer meta ===== */
+  /* ===== Footer ===== */
   $("#footMeta").textContent = `Datos de referencia (editables en data.js). Última revisión: ${D.DATA_ACTUALIZADO}. Récords y estatus no verificados se marcan como tales.`;
 
   /* ===== Init ===== */
   renderOrgs();
   renderP4P("pos");
+  fillCmpSelects();
+  renderCompare();
+  renderFav();
+  abrirDesdeHash();
 })();
